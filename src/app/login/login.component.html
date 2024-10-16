@@ -1,0 +1,36 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-4">
+        <h2 class="text-center">Login</h2>
+        <form (submit)="onSubmit()" method="post">
+          <div class="mb-3">
+            <label for="emailAddress" class="form-label">Email Address</label>
+            <input
+              type="email"
+              class="form-control"
+              id="emailAddress"
+              [(ngModel)]="loginData.emailAddress"
+              name="emailAddress"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              [(ngModel)]="loginData.password"
+              name="password"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+      </div>
+      <div *ngIf="errorMessage" class="alert alert-danger fw-bold mt-3 fs-3 text-center mx-auto">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+  // TODO: DODAC VALIDACJE DANYCH
