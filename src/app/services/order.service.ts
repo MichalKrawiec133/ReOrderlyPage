@@ -1,17 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Order } from '../models/order.model';
-
+import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
-  private ordersUrl = 'http://localhost:4200/orders';
+  private ordersUrl = 'http://localhost:5120/orders';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   getOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>(this.ordersUrl);
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}` // Set Authorization header
+    });
+    return this.http.get<Order[]>(this.ordersUrl, { headers });
   }
 }

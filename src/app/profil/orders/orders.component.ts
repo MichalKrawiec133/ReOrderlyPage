@@ -1,18 +1,40 @@
-import { Component } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { NgIf,NgFor, CommonModule } from '@angular/common';
+import { OrderService } from '../../services/order.service';
+import { Order } from '../../models/order.model';
+
 @Component({
   selector: 'app-orders',
   standalone: true,
   imports: [
 
-    NgIf
+    NgIf, 
+    NgFor,
+    CommonModule
 
   ],
   templateUrl: './orders.component.html',
   styleUrl: './orders.component.css'
 })
-export class OrdersComponent {
+export class OrdersComponent implements OnInit{
 
 
-  //TODO: kontynuacja dopiero po naprawie backendu. 
+  orders: Order[] = [];
+
+  constructor(private orderService: OrderService) {}
+
+  ngOnInit(): void {
+    this.loadOrders();
+  }
+
+  loadOrders(): void {
+    this.orderService.getOrders().subscribe(
+      (data: Order[]) => {
+        this.orders = data;
+      },
+      (error) => {
+        console.error('Error fetching orders', error);
+      }
+    );
+  }
 }

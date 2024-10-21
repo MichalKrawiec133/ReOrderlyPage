@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { User } from '../models/user.model';
+import { Login } from '../models/login.model';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 @Component({
@@ -16,7 +16,7 @@ import { NgIf } from '@angular/common';
 })
 export class LoginComponent {
 
-  loginData: User = new User('', '');
+  loginData: Login = new Login('', '');
   errorMessage: string | null = null;
 
   constructor(private authService: AuthService, private router: Router) {}

@@ -1,0 +1,21 @@
+.accordion-body {
+    background-color: #f8f9fa; 
+}
+
+.table {
+    border-collapse: separate; 
+    border-spacing: 0;
+}
+
+.table th,
+.table td {
+    border: 1px solid #dee2e6; 
+}
+
+.table th {
+    background-color: #e9ecef; 
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1; 
+}

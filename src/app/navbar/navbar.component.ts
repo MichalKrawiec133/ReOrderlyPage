@@ -1,45 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
-import { error } from 'console';
+
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [
-
     NgIf
-
   ],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrls: ['./navbar.component.css'] 
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
+  isLoggedIn: boolean = false; 
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  checkLoginForm(): boolean{
+  ngOnInit(): void {
+    this.isLoggedIn = this.authService.isLoggedIn();
+  }
 
-    return this.authService.isLoggedIn();
-
+  checkLoginForm(): boolean {
+    return this.isLoggedIn; 
   }
 
   checkLogin(): void {
-    if (this.authService.isLoggedIn()) {
-      
+    if (this.isLoggedIn) {
       this.router.navigate(['/profil']);
     } else {
-      
       this.router.navigate(['/login']);
     }
   }
 
-  logout(): void{
-
-    if (this.authService.isLoggedIn()) {
+  logout(): void {
+    if (this.isLoggedIn) {
       this.authService.logout();
+      this.isLoggedIn = false; 
       this.router.navigate(['/']);
-    } 
+    }
   }
-
 }

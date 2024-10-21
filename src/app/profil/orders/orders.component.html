@@ -1,29 +1,43 @@
-
 <div class="orders-section mt-5">
-    <h3 class="text-center mb-4">Your Orders</h3>
-    <table class="table table-bordered text-center">
-      <thead>
-        <tr>
-          <th>Order ID</th>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Status</th>
-          <th>Date</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <!-- <tbody>
-        
-        <tr *ngFor="let order of orders">
-          <td>{{ order.id }}</td>
-          <td>{{ order.productName }}</td>
-          <td>{{ order.quantity }}</td>
-          <td>{{ order.status }}</td>
-          <td>{{ order.date | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ order.price | currency }}</td>
-        </tr>
-      </tbody> -->
-    </table>
-  </div>
-  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  //TODO: kontynuacja dopiero po naprawie backendu. 
+    <h3 class="text-center mb-4">Twoje Zamówienia</h3>
+    <div class="accordion" id="ordersAccordion">
+        <ng-container *ngFor="let order of orders">
+            <div class="accordion-item">
+                <h2 class="accordion-header" [attr.id]="'heading' + order.orderId">
+                    <button class="accordion-button" type="button" 
+                            data-bs-toggle="collapse" 
+                            [attr.data-bs-target]="'#collapse' + order.orderId" 
+                            [attr.aria-expanded]="true" 
+                            [attr.aria-controls]="'collapse' + order.orderId">
+                        Zamówienie #{{ order.orderId }} - Status: {{ order.orderStatus.orderStatusDescription }} 
+                        - Data: {{ order.orderDate | date: 'dd/MM/yyyy' }}
+                    </button>
+                </h2>
+                <div [attr.id]="'collapse' + order.orderId" class="accordion-collapse collapse" 
+                     [attr.aria-labelledby]="'heading' + order.orderId" 
+                     data-bs-parent="#ordersAccordion">
+                    <div class="accordion-body">
+                        <table class="table table-bordered table-striped table-hover text-center">
+                            <thead>
+                                <tr>
+                                    <th>Produkt</th>
+                                    <th>Ilość</th>
+                                    <th>Cena</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let item of order.orderItems">
+                                    <tr>
+                                        <td>{{ item.products.productName }}</td>
+                                        <td>{{ item.orderItemQuantity }}</td>
+                                        <td>{{ item.orderPrice | currency }}</td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
