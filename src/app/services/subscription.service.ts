@@ -20,4 +20,15 @@ export class SubscriptionService {
 
     return this.http.get<OrderSubscription[]>(this.subscriptionsUrl, { headers });
   }
+
+  cancel(orderSubscriptionId: number): Observable<void> {
+    const token = localStorage.getItem('authToken'); 
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}` 
+    });
+    
+    console.log(this.subscriptionsUrl + "/" + orderSubscriptionId);
+    return this.http.delete<void>(this.subscriptionsUrl + "/" + orderSubscriptionId, { headers });
+}
+
 }

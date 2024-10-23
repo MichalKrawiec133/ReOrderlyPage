@@ -1,33 +1,24 @@
 import { User } from "./user.model"; 
-import { Product } from "./product.model"; 
+import { OrderSubscriptionProducts } from "./order-subscription-products.model"; 
 
 export class OrderSubscription {
     orderSubscriptionId: number;
-    idUser: number;
     user: User; 
-    idProduct: number;
-    products: Product;
-    productQuantity: number;
     intervalDays: number;
     orderDate: Date; 
+    orderSubscriptionProducts: OrderSubscriptionProducts[]; 
 
     constructor(
         orderSubscriptionId: number,
-        idUser: number,
         user: User,
-        idProduct: number,
-        products: Product,
-        productQuantity: number,
         intervalDays: number,
-        orderDate: Date
+        orderDate: Date,
+        orderSubscriptionProducts: OrderSubscriptionProducts[] 
     ) {
         this.orderSubscriptionId = orderSubscriptionId;
-        this.idUser = idUser;
         this.user = user;
-        this.idProduct = idProduct;
-        this.products = products;
-        this.productQuantity = productQuantity;
         this.intervalDays = intervalDays;
         this.orderDate = orderDate;
+        this.orderSubscriptionProducts = orderSubscriptionProducts; 
     }
 }

@@ -9,8 +9,7 @@
                             [attr.data-bs-target]="'#collapse' + subscription.orderSubscriptionId" 
                             [attr.aria-expanded]="true" 
                             [attr.aria-controls]="'collapse' + subscription.orderSubscriptionId">
-                        Subskrypcja #{{ subscription.orderSubscriptionId }} - Produkt: {{ subscription.products.productName }} 
-                        - Ilość: {{ subscription.productQuantity }} - Data zamówienia: {{ subscription.orderDate | date: 'dd/MM/yyyy' }}
+                        Subskrypcja #{{ subscription.orderSubscriptionId }} - Data zamówienia: {{ subscription.orderDate | date: 'dd/MM/yyyy' }} - Okres subskrypcji: {{ subscription.intervalDays }} dni
                     </button>
                 </h2>
                 <div [attr.id]="'collapse' + subscription.orderSubscriptionId" class="accordion-collapse collapse" 
@@ -23,14 +22,27 @@
                                     <th>Produkt</th>
                                     <th>Ilość</th>
                                     <th>Cena</th>
+                                    <th>Okres subskrypcji</th>
+                                    <th style="border: none;"></th> 
+                                    <th style="border: none;"></th> 
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>{{ subscription.products.productName }}</td>
-                                    <td>{{ subscription.productQuantity }}</td>
-                                    <td>{{ subscription.products.productPrice | currency }}</td>
-                                </tr>
+                                
+                                <ng-container *ngFor="let item of subscription.orderSubscriptionProducts">
+                                    <tr>
+                                        <td>{{ item.products.productName }}</td>
+                                        <td>{{ item.productQuantity }}</td>
+                                        <td>{{ item.products.productPrice | currency }}</td>
+                                        <td>{{ subscription.intervalDays }} dni</td> 
+                                        <td style="border: none;" (click)="onCancel(subscription.orderSubscriptionId)">
+                                            <i class="bi bi-trash" ></i> <!-- Przycisk do anulowania -->
+                                        </td>
+                                        <td style="border: none;">
+                                            <i class="fas fa-edit fa-lg text-primary" (click)="onEdit(subscription)"></i> <!-- Przycisk do edycji -->
+                                        </td>
+                                    </tr>
+                                </ng-container>
                             </tbody>
                         </table>
                     </div>
