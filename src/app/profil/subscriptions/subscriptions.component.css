@@ -1,0 +1,10 @@
+.edit-input {
+    border: none; 
+    background-color: transparent; 
+    width: 100%; 
+    padding: 5px; 
+}
+
+.edit-input:focus {
+    outline: none; 
+}

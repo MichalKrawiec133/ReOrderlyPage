@@ -31,4 +31,25 @@ export class SubscriptionService {
     return this.http.delete<void>(this.subscriptionsUrl + "/" + orderSubscriptionId, { headers });
 }
 
+cancelProduct(orderSubscriptionId: number, productId: number): Observable<void> {
+  const token = localStorage.getItem('authToken'); 
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}` 
+  });
+
+  const url = `${this.subscriptionsUrl}/product/${orderSubscriptionId}/${productId}`;
+  
+  return this.http.delete<void>(url, { headers });
+}
+
+
+  update(subscription: OrderSubscription): Observable<OrderSubscription> {
+    const token = localStorage.getItem('authToken'); 
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}` 
+    });
+    
+    console.log(this.subscriptionsUrl);
+    return this.http.patch<OrderSubscription>(this.subscriptionsUrl , subscription ,{ headers });
+  }
 }
