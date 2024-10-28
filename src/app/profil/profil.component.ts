@@ -4,15 +4,19 @@ import { ProfilBarComponent } from './profil-bar/profil-bar.component';
 import { OrdersComponent } from './orders/orders.component';
 import { NgIf } from '@angular/common';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
+import { AccountComponent } from './account/account.component';
 
 @Component({
   selector: 'app-profil',
   standalone: true,
   imports: [
-    ProfilBarComponent,
-    OrdersComponent,
+    
     NgIf,
-    SubscriptionsComponent
+
+    OrdersComponent,
+    ProfilBarComponent,
+    SubscriptionsComponent,
+    AccountComponent
   ],
   templateUrl: './profil.component.html',
   styleUrl: './profil.component.css'

@@ -1,0 +1,91 @@
+<div class="account-section mt-5">
+    <h3 class="text-center mb-4">Moje Konto</h3>
+    
+    <div *ngIf="user" class="user-details">
+        <div class="user-info">
+            <p><strong>Imię:</strong> {{ user?.name }}</p>
+            <p><strong>Nazwisko:</strong> {{ user?.lastName }}</p>
+            <p><strong>Email:</strong> {{ user?.emailAddress }}</p>
+            <p><strong>Numer telefonu:</strong> {{ user?.phoneNumber }}</p>
+            <p *ngIf="user?.streetName"><strong>Ulica:</strong> {{ user.streetName }} {{ user.houseNumber }}</p>
+            <p *ngIf="user?.zipcode"><strong>Kod pocztowy:</strong> {{ user.zipcode }}</p>
+            <p *ngIf="user?.voivodeship"><strong>Województwo:</strong> {{ user.voivodeship }}</p>
+            <p *ngIf="user?.country"><strong>Kraj:</strong> {{ user.country }}</p>
+
+        </div>
+
+        <button class="btn btn-primary mt-3" (click)="onEdit()">Edytuj Dane</button>
+        <button class="btn btn-danger mt-3" (click)="onDeleteAccount()">Usuń Konto</button>
+        <button class="btn btn-secondary mt-3" (click)="showChangePasswordForm = !showChangePasswordForm">
+            Zmień Hasło
+        </button>
+        
+        <div *ngIf="showChangePasswordForm">
+            <h5 class="mt-4">Zmień Hasło</h5>
+            <form (ngSubmit)="onChangePassword()">
+                <div class="mb-3">
+                    <label for="emailAddressChangePassword" class="form-label">Email</label>
+                    <input type="email"
+                           id="emailAddressChangePassword"
+                           [(ngModel)]="login.emailAddress"
+                           name="emailAddressChangePassword"
+                           class="form-control"
+                           required />
+                </div>
+
+                <div class="mb-3">
+                    <label for="currentPassword" class="form-label">Aktualne Hasło</label>
+                    <input type="password"
+                           id="currentPassword"
+                           [(ngModel)]="currentPassword"
+                           name="currentPassword"
+                           class="form-control"
+                           required />
+                </div>
+                <div class="mb-3">
+                    <label for="newPassword" class="form-label">Nowe Hasło</label>
+                    <input type="password"
+                           id="newPassword"
+                           [(ngModel)]="login.password"
+                           name="newPassword"
+                           class="form-control"
+                           required />
+                </div>
+                <button type="submit" class="btn btn-success">Zmień Hasło</button>
+            </form>
+        </div>
+
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+
+
+    <div *ngIf="isEditing" class="edit-form mt-4">
+        <form (ngSubmit)="onUpdate()">
+            <div class="mb-3">
+                <label for="streetName" class="form-label">Ulica</label>
+                <input type="text" id="streetName" [(ngModel)]="user.streetName" name="streetName" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label for="houseNumber" class="form-label">Numer domu</label>
+                <input type="number" id="houseNumber" [(ngModel)]="user.houseNumber" name="houseNumber" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label for="voivodeship" class="form-label">Województwo</label>
+                <input type="text" id="voivodeship" [(ngModel)]="user.voivodeship" name="voivodeship" class="form-control" maxlength="32"/>
+            </div>
+            <div class="mb-3">
+                <label for="country" class="form-label">Kraj</label>
+                <input type="text" id="country" [(ngModel)]="user.country" name="country" class="form-control" maxlength="32"/>
+            </div>
+            <div class="mb-3">
+                <label for="zipcode" class="form-label">Kod pocztowy</label>
+                <input type="number" id="zipcode" [(ngModel)]="user.zipcode" name="zipcode" class="form-control"/>
+            </div>
+
+            <button type="submit" class="btn btn-success">Zapisz zmiany</button>
+        </form>
+
+    </div>
+
+</div>

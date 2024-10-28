@@ -11,7 +11,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class ProfilBarComponent {
   @Output() sectionChanged = new EventEmitter<string>();
 
-  // Funkcja do informowania o zmianie sekcji
+
   changeSection(section: string) {
     this.sectionChanged.emit(section);
   }

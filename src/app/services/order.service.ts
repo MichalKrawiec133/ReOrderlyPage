@@ -14,7 +14,7 @@ export class OrderService {
   getOrders(): Observable<Order[]> {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}` // Set Authorization header
+      'Authorization': `Bearer ${token}`
     });
     return this.http.get<Order[]>(this.ordersUrl, { headers });
   }
