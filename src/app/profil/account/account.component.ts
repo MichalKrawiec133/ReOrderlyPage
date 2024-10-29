@@ -6,6 +6,8 @@ import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Login } from '../../models/login.model';
 import { ChangePassword } from '../../models/change-password.model';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-account',
   standalone: true,
@@ -29,7 +31,8 @@ export class AccountComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private confirmDialogService: ConfirmDialogService
+    private confirmDialogService: ConfirmDialogService,
+    private router: Router
   ) {
     this.user = {
       userId: 0,
@@ -95,15 +98,11 @@ export class AccountComponent implements OnInit {
     }).subscribe(result => {
       if (result && this.user) {
         const userId = this.user.userId;
-
-        
-        this.userService.deleteUserSubscriptions(userId).subscribe(() => {
           
           this.userService.deleteUser().subscribe(() => {
             alert('Konto zostało usunięte.');
-            // todo: dodac przekierowanie do glownej strony.
+            this.router.navigate(['/']);
           });
-        });
       }
     });
   }

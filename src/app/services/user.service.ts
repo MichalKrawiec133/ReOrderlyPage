@@ -25,6 +25,7 @@ export class UserService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}` 
     });
+    //console.log(user);
     return this.http.patch<User>(this.apiUrl, user, { headers });
   }
 
@@ -34,14 +35,6 @@ export class UserService {
       'Authorization': `Bearer ${token}` 
     });
     return this.http.delete<void>(this.apiUrl, { headers });
-  }
-
-  deleteUserSubscriptions(userId: number): Observable<void> {
-    const token = localStorage.getItem('authToken');
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}` 
-    });
-    return this.http.delete<void>(`${this.apiUrl}/${userId}/subscriptions`, { headers });
   }
 
   changePassword(email: string, currentPassword: string, newPassword: string): Observable<any> {

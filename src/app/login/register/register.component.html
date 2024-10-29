@@ -1,0 +1,67 @@
+<div class="registration-section mt-5">
+    <h3 class="text-center mb-4">Rejestracja</h3>
+    
+    <form (ngSubmit)="onRegister()">
+        <div class="mb-3">
+            <label for="name" class="form-label">Imię</label>
+            <input type="text" id="name" [(ngModel)]="user.name" name="name" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Nazwisko</label>
+            <input type="text" id="lastName" [(ngModel)]="user.lastName" name="lastName" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label for="emailAddress" class="form-label">Email</label>
+            <input type="email" id="emailAddress" [(ngModel)]="user.emailAddress" name="emailAddress" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Hasło</label>
+            <input type="password" id="password" [(ngModel)]="user.password" name="password" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label for="phoneNumber" class="form-label">Numer telefonu</label>
+            <input type="number" id="phoneNumber" [(ngModel)]="user.phoneNumber" name="phoneNumber" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label for="streetName" class="form-label">Ulica</label>
+            <input type="text" id="streetName" [(ngModel)]="user.streetName" name="streetName" class="form-control"/>
+        </div>
+        <div class="mb-3">
+            <label for="houseNumber" class="form-label">Numer domu</label>
+            <input type="number"
+                   id="houseNumber"
+                   [(ngModel)]="user.houseNumber"
+                   name="houseNumber"
+                   class="form-control"/>
+        </div>
+        <div class="mb-3">
+            <label for="voivodeship" class="form-label">Województwo</label>
+            <input type="text"
+                   id="voivodeship"
+                   [(ngModel)]="user.voivodeship"
+                   name="voivodeship"
+                   class="form-control"/>
+        </div>
+        <div class="mb-3">
+            <label for="country" class="form-label">Kraj</label>
+            <input type="text"
+                   id="country"
+                   [(ngModel)]="user.country"
+                   name="country"
+                   class="form-control"/>
+        </div>
+        <div class="mb-3">
+            <label for="zipcode" class="form-label">Kod pocztowy</label>
+            <input type="number"
+                   id="zipcode"
+                   [(ngModel)]="user.zipcode"
+                   name="zipcode"
+                   class="form-control"/>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Zarejestruj się</button>
+    </form>
+
+    <!-- Wyświetlanie błędów -->
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+</div>

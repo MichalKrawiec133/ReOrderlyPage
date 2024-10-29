@@ -3,10 +3,10 @@
     
     <div *ngIf="user" class="user-details">
         <div class="user-info">
-            <p><strong>Imię:</strong> {{ user?.name }}</p>
-            <p><strong>Nazwisko:</strong> {{ user?.lastName }}</p>
-            <p><strong>Email:</strong> {{ user?.emailAddress }}</p>
-            <p><strong>Numer telefonu:</strong> {{ user?.phoneNumber }}</p>
+            <p><strong>Imię:</strong> {{ user.name }}</p>
+            <p><strong>Nazwisko:</strong> {{ user.lastName }}</p>
+            <p><strong>Email:</strong> {{ user.emailAddress }}</p>
+            <p><strong>Numer telefonu:</strong> {{ user.phoneNumber }}</p>
             <p *ngIf="user?.streetName"><strong>Ulica:</strong> {{ user.streetName }} {{ user.houseNumber }}</p>
             <p *ngIf="user?.zipcode"><strong>Kod pocztowy:</strong> {{ user.zipcode }}</p>
             <p *ngIf="user?.voivodeship"><strong>Województwo:</strong> {{ user.voivodeship }}</p>
