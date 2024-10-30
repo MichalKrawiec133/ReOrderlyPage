@@ -1,26 +1,38 @@
 import { Component } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
+import { FormsModule } from '@angular/forms';
+import { NgIf, CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [],
+  imports: [
+
+    NgIf,
+    FormsModule,
+    CommonModule
+
+  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-  user: User; // Użytkownik
+  user: User; 
   errorMessage: string | null = null;
 
-  constructor(private userService: UserService) {
-    this.user = new User;
-    //todo: poprawic usera
+  constructor(private authService: AuthService, private router: Router) {
+
+    this.user = new User(0, '', '', '', '', 0);
+    
   }
 
   onRegister(): void {
-    this.userService.register(this.user).subscribe(
+    this.authService.register(this.user).subscribe(
       () => {
+
         alert('Rejestracja zakończona sukcesem!');
+        this.router.navigate(['/profil']);
       },
       (error) => {
         console.error('Błąd podczas rejestracji', error);

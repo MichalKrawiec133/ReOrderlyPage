@@ -48,7 +48,11 @@ export class UserService {
       oldPassword: currentPassword,
       newPassword: newPassword
     };
-//todo: nie działa zmiana hasła. bad request a w swaggerze działa. 
+
+
     return this.http.patch<any>(`${this.apiUrl}/changePassword`, body, { headers });
   }
+
+  
+
 }

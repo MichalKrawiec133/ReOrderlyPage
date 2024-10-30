@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { BrowserStorageService } from './browser-storage.service'; 
+import { User } from '../models/user.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,8 +19,10 @@ export class AuthService {
   ) {}
 
   isLoggedIn(): boolean {
-    return !!this.storageService.getItem('authToken');
-  }
+    const token = this.storageService.getItem('authToken');
+    console.log('Token:', token); 
+    return !!token; 
+}
 
   login(credentials: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
@@ -34,5 +37,17 @@ export class AuthService {
   logout(): void {
     this.storageService.removeItem('authToken'); 
     this.router.navigate(['/']);
+  }
+
+  
+  register(user: User): Observable<any> {
+    
+    return this.http.post<any>(`${this.apiUrl}/account/register`, user).pipe(
+      tap((response: any) => {
+        if (response.token) {
+          this.storageService.setItem('authToken', response.token); 
+        }
+      })
+    );
   }
 }
