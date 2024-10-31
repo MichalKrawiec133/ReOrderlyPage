@@ -2,19 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service'; 
 import { Product } from '../models/product.model';
 import { CommonModule } from '@angular/common';
+import { CartService } from '../services/cart.service';
+import { FormsModule } from '@angular/forms';
+import { CartProduct } from '../models/cart-product.model';
+
 @Component({
   selector: 'app-products',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
 export class ProductsComponent implements OnInit {
   products: Product[] = []; 
+  
+  quantity: { [key: number]: number } = {};
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private cartService: CartService) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -33,8 +40,32 @@ export class ProductsComponent implements OnInit {
   }
 
   addToCart(product: Product): void {
-    // TODO: dodac logike dodawania do koszyka po dodaniu komponentu koszyk. 
-    console.log('Dodano do koszyka:', product);
+    const qty = this.quantity[product.productId] || 1; 
+
+    if (qty > product.productQuantity) {
+        alert(`Nie możesz dodać więcej niż ${product.productQuantity} sztuk tego produktu.`);
+        return; 
+    } else if (qty < 1){
+
+      alert(`Dodaj minimum 1 sztukę tego produktu.`);
+      return;
+    }
+
+    const cartProduct = new CartProduct(
+        product.productId,
+        product.productName,
+        product.productPrice,
+        product.productQuantity,
+        product.imagePath,
+        qty
+    );
+
+    this.cartService.addToCart(cartProduct);
+    
+
+    this.quantity[product.productId] = 1; 
+
   }
+
 }
 

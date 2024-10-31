@@ -23,7 +23,7 @@ export class AuthService {
     console.log('Token:', token); 
     return !!token; 
 }
-
+//TODO: jak wygaśnie token to się robią problemy z przyciskami bo strona się w sumie nie odświeża więc navbar itp nie wiedzą ze przycisk wygasł. 
   login(credentials: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       tap((response: any) => {

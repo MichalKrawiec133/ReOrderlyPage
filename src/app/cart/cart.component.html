@@ -1,0 +1,27 @@
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Koszyk</h2>
+    <div *ngIf="items.length === 0" class="alert alert-info text-center">
+        Koszyk jest pusty.
+    </div>
+    <div *ngFor="let item of items" class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4 d-flex align-items-center">
+                <img [src]="'assets' + item.imagePath" class="img-fluid rounded-start" alt="{{ item.productName }}" />
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.productName }}</h5>
+                    <p class="card-text">Cena: {{ item.productPrice | currency }}</p>
+                    <p class="card-text">Ilość w koszyku: {{ item.quantityToAdd }}</p> 
+                    <div>
+                        <button (click)="increaseQuantity(item)" class="btn btn-outline-primary btn-sm">+</button>
+                        <button (click)="decreaseQuantity(item)" class="btn btn-outline-primary btn-sm">-</button>
+                        <button (click)="removeFromCart(item)" class="btn btn-outline-danger btn-sm">x</button>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+    <button (click)="clearCart()" class="btn btn-danger mt-3">Wyczyść koszyk</button>
+</div>

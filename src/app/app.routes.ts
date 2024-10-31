@@ -4,7 +4,7 @@ import { ProfilComponent } from './profil/profil.component';
 import { AccountComponent } from './profil/account/account.component';
 import { RegisterComponent } from './login/register/register.component';
 import { ProductsComponent } from './products/products.component';
-
+import { CartComponent } from './cart/cart.component';
 export const routes: Routes = [
     { path: '', redirectTo: '/produkty', pathMatch: 'full' }, 
     
@@ -13,5 +13,5 @@ export const routes: Routes = [
     {path: 'konto', component: AccountComponent},
     {path: 'rejestracja', component: RegisterComponent},
     { path: 'produkty', component: ProductsComponent },
-
+    { path: 'cart', component: CartComponent },
 ];

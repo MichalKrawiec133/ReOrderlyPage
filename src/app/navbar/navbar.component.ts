@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,11 +16,19 @@ import { NgIf } from '@angular/common';
 })
 export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false; 
+  itemCount: number = 0;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private cartService: CartService) {}
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isLoggedIn();
+    this.cartService.itemCount$.subscribe(count => {
+      this.itemCount = count; 
+    });
+  }
+
+  updateCartCount(): void {
+    this.itemCount = this.cartService.getItemCount(); 
   }
 
   checkLoginForm(): boolean {

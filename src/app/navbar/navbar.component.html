@@ -16,12 +16,18 @@
           <a class="nav-link" routerLink="">Pricing</a>
         </li>
         
+      
       </ul>
       <!-- <span class="navbar-text">
         Navbar text with an inline element
       </span> -->
     </div>
-
+    <div class="position-relative">
+      <button class="btn btn-outline-primary me-2 ml-auto" routerLink="/cart" type="button">
+          <i class="bi bi-cart-fill"></i>
+          <span *ngIf="itemCount > 0" class="position-absolute top-0 start-90 translate-middle badge rounded-pill bg-danger">{{ itemCount }}</span>
+      </button>
+    </div>
     <button *ngIf="checkLoginForm()" class="btn btn-outline-success me-2 ml-auto" routerLink="/profil" type="button">
       Profil 
     </button>
@@ -33,4 +39,6 @@
     <button *ngIf="checkLoginForm()" class="btn btn-outline-success me-2 ml-auto" (click)="logout()" type="button">
       Wyloguj
     </button>
+
+    
   </nav>
