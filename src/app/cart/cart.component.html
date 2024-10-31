@@ -11,7 +11,8 @@
             <div class="col-md-8">
                 <div class="card-body">
                     <h5 class="card-title">{{ item.productName }}</h5>
-                    <p class="card-text">Cena: {{ item.productPrice | currency }}</p>
+                    <p class="card-text">Cena: {{ item.productPrice | currency:'zł' }}</p>
+                    //TODO: ZMIENIC wszystkie pipe currency:'PLN' na: currency:'zł' i jeszcze poszukac czy da sie po prawej stronie a nie default lewo...
                     <p class="card-text">Ilość w koszyku: {{ item.quantityToAdd }}</p> 
                     <div>
                         <button (click)="increaseQuantity(item)" class="btn btn-outline-primary btn-sm">+</button>
@@ -23,5 +24,7 @@
             </div>
         </div>
     </div>
-    <button (click)="clearCart()" class="btn btn-danger mt-3">Wyczyść koszyk</button>
+    <button (click)="clearCart()" class="btn btn-danger my-3">Wyczyść koszyk</button>
+    <button routerLink="/order-summary" class="btn btn-success my-3 ms-3">Przejdź do podsumowania zamówienia</button>
+
 </div>

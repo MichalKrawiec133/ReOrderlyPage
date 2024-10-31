@@ -5,13 +5,16 @@ import { AccountComponent } from './profil/account/account.component';
 import { RegisterComponent } from './login/register/register.component';
 import { ProductsComponent } from './products/products.component';
 import { CartComponent } from './cart/cart.component';
+import { OrderSummaryComponent } from './order-summary/order-summary.component';
+
 export const routes: Routes = [
     { path: '', redirectTo: '/produkty', pathMatch: 'full' }, 
     
-    {path: 'login', component: LoginComponent},
-    {path: 'profil', component: ProfilComponent},
-    {path: 'konto', component: AccountComponent},
-    {path: 'rejestracja', component: RegisterComponent},
+    { path: 'login', component: LoginComponent },
+    { path: 'profil', component: ProfilComponent },
+    { path: 'konto', component: AccountComponent },
+    { path: 'rejestracja', component: RegisterComponent },
     { path: 'produkty', component: ProductsComponent },
     { path: 'cart', component: CartComponent },
+    { path: 'order-summary', component: OrderSummaryComponent }, 
 ];

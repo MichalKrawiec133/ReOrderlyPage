@@ -6,7 +6,7 @@
                 <img [src]="'assets' + product.imagePath" class="card-img-top" alt="{{ product.productName }}" />
                 <div class="card-body">
                     <h5 class="card-title">{{ product.productName }}</h5>
-                    <p class="card-text">Cena: {{ product.productPrice | currency }}</p>
+                    <p class="card-text">Cena: {{ product.productPrice | currency:'PLN' }}</p>
                     <p class="card-text">Ilość dostępna: {{ product.productQuantity }}</p>
                     
                     <input type="number" [(ngModel)]="quantity[product.productId]" min="1" [max]="product.productQuantity" class="form-control mb-2" placeholder="Ilość do dodania" />

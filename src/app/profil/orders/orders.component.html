@@ -30,7 +30,7 @@
                                     <tr>
                                         <td>{{ item.products.productName }}</td>
                                         <td>{{ item.orderItemQuantity }}</td>
-                                        <td>{{ item.orderPrice | currency }}</td>
+                                        <td>{{ item.orderPrice | currency:'PLN' }}</td>
                                     </tr>
                                 </ng-container>
                             </tbody>

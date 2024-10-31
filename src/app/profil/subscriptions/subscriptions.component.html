@@ -46,7 +46,7 @@
                                             
                                             <span *ngIf="!isEditing(subscription.orderSubscriptionId)">{{ item.productQuantity }}</span>
                                         </td>
-                                        <td>{{ item.products.productPrice | currency }}</td>
+                                        <td>{{ item.products.productPrice | currency:'PLN' }}</td>
                                         <td>
                                             
                                             <input *ngIf="isEditing(subscription.orderSubscriptionId)" 
