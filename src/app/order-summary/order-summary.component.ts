@@ -27,6 +27,26 @@ export class OrderSummaryComponent implements OnInit {
 
   calculateTotal(): void {
     this.totalAmount = this.items.reduce((total, item) => total + (item.productPrice * item.quantityToAdd), 0);
+    this.totalAmount = Math.round(this.totalAmount * 100) / 100;
+  }
+  
+  placeOrder(): void {
+    if (this.items.length === 0) {
+      alert('Koszyk jest pusty!'); 
+      return;
+    }
+
+    
+    //TODO: dodac logike zamowienia - przerzucic do orderservice 
+    // Możesz tutaj dodać logikę do wysyłania zamówienia do serwera lub przekierowania do strony potwierdzenia
+
+    // Na przykład:
+    // this.router.navigate(['/order-confirmation']); // Jeśli masz routing do strony potwierdzenia
+
+    
+    this.cartService.clearCart();
+    alert('Dziękujemy za zamówienie!'); 
   }
 }
+
 

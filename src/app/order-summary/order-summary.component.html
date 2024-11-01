@@ -11,11 +11,16 @@
             <div class="col-md-8">
                 <div class="card-body">
                     <h5 class="card-title">{{ item.productName }}</h5>
-                    <p class="card-text">Cena: {{ item.productPrice | currency:'PLN' }}</p>
+                    <p class="card-text">Cena: {{ item.productPrice | number: '1.2-2' }} zł</p>
                     <p class="card-text">Ilość: {{ item.quantityToAdd }}</p> 
                 </div>
             </div>
         </div>
     </div>
-    <h3 class="text-right">Łączna kwota: {{ totalAmount | currency:'PLN' }}</h3>
+    <h3 class="text-right">Łączna kwota: {{ totalAmount | number: '1.2-2' }} zł</h3>
+
+   
+    <div class="text-center mt-4">
+        <button (click)="placeOrder()" class="btn btn-primary">Złóż zamówienie</button>
+    </div>
 </div>

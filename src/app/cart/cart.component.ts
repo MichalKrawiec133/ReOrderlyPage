@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
   imports: [
 
     CommonModule,
-    RouterLink
+    RouterLink,
 
   ],
   templateUrl: './cart.component.html',
