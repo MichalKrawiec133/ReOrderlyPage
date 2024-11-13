@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { BrowserStorageService } from './browser-storage.service'; 
 import { User } from '../models/user.model';
+import { jwtDecode } from "jwt-decode";
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -50,4 +52,18 @@ export class AuthService {
       })
     );
   }
+
+  getCurrentUserId(): number | null {
+    const token = this.storageService.getItem('authToken');
+    if (!token) return null;
+
+    try {
+        const decodedToken: any = jwtDecode(token);
+        return decodedToken.UserId ? Number(decodedToken.UserId) : null;
+    } catch (error) {
+        console.error("Invalid token", error);
+        return null;
+    }
+  }
+
 }

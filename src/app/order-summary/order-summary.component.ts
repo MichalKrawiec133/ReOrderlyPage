@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { CartProduct } from '../models/cart-product.model';
 import { CommonModule } from '@angular/common';
-
+import { Order } from '../models/order.model';
+import { OrderItems } from '../models/order-items.model';
+import { OrderService } from '../services/order.service';
+import { Product } from '../models/product.model';
+import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-order-summary',
   standalone: true,
@@ -17,8 +21,8 @@ import { CommonModule } from '@angular/common';
 export class OrderSummaryComponent implements OnInit {
   items: CartProduct[] = [];
   totalAmount: number = 0;
-
-  constructor(private cartService: CartService) {}
+  itemsProduct: Product[]=[];
+  constructor(private cartService: CartService, private orderService: OrderItems, private authService: AuthService,) {}
 
   ngOnInit(): void {
     this.items = this.cartService.getItems(); 
@@ -31,21 +35,59 @@ export class OrderSummaryComponent implements OnInit {
   }
   
   placeOrder(): void {
-    if (this.items.length === 0) {
-      alert('Koszyk jest pusty!'); 
-      return;
+    this.itemsProduct = this.items.map(item => ({
+      productId: item.productId,
+      productName: item.productName, 
+      productPrice: item.productPrice,
+      quantityToAdd: item.quantityToAdd,
+      productQuantity: item.productQuantity,
+      imagePath: item.imagePath
+    }));
+
+    const orderItems: OrderItems[] = this.items.map(item => {
+      
+      const product = this.itemsProduct.find(p => p.productId === item.productId);
+
+      if (!product) {
+          throw new Error(`Produkt nieznaleziony`);
+      }
+
+      return new OrderItems(
+          0, 
+          item.productId,
+          product, 
+          0, 
+          item.quantityToAdd,
+          item.productPrice
+      );
+    });
+    var userId = this.authService.getCurrentUserId();
+
+    if (!userId) {
+      throw new Error(`Id użytkownika nieznaleziono`);
     }
+    
+    const order: Order = {
+      orderId: 0, 
+      idUser: userId, 
+      orderDate: new Date(), 
+      orderStatus: { orderStatusId: 1 }, 
+      orderItems: orderItems
+    };
 
     
-    //TODO: dodac logike zamowienia - przerzucic do orderservice 
-    // Możesz tutaj dodać logikę do wysyłania zamówienia do serwera lub przekierowania do strony potwierdzenia
-
-    // Na przykład:
-    // this.router.navigate(['/order-confirmation']); // Jeśli masz routing do strony potwierdzenia
-
-    
-    this.cartService.clearCart();
-    alert('Dziękujemy za zamówienie!'); 
+    this.orderService.placeOrder(order).subscribe(
+      response => {
+        console.log(response);
+        alert('Dziękujemy za zamówienie!'); 
+        this.cartService.clearCart(); // Wyczyść koszyk po złożeniu zamówienia
+        this.router.navigate(['/order-confirmation']); // Przekierowanie do strony potwierdzenia
+      },
+      error => {
+        console.error('Error placing order:', error);
+        alert('Wystąpił błąd podczas składania zamówienia. Spróbuj ponownie.');
+      }
+    );
   }
 }
 
