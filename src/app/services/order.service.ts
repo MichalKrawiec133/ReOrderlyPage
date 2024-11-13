@@ -8,7 +8,7 @@ import { OrderStatus } from '../models/order-status.model';
   providedIn: 'root'
 })
 export class OrderService {
-  private ordersUrl = 'http://localhost:5120/orders';
+  private ordersUrl = 'http://localhost:5120';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -17,7 +17,7 @@ export class OrderService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<Order[]>(this.ordersUrl, { headers });
+    return this.http.get<Order[]>(`${this.ordersUrl}/orders`, { headers });
   }
 
   placeOrder(order: Order): Observable<any> {
@@ -30,9 +30,9 @@ export class OrderService {
     return this.http.post(`${this.ordersUrl}/checkout`, order, { headers });
   }
 
-  getStatus(orderStatus: OrderStatus): Observable<any>{
+  getStatus(): Observable<OrderStatus[]>{
 
-    return this.http.get('http://localhost:5120/getStatus');
+    return this.http.get<OrderStatus[]>(`${this.ordersUrl}/getStatus`);
 
   }
 }
