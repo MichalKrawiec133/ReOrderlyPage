@@ -1,40 +1,48 @@
 <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-4">
-        <h2 class="text-center">Login</h2>
-        <form (submit)="onSubmit()" method="post">
-          <div class="mb-3">
-            <label for="emailAddress" class="form-label">Email Address</label>
-            <input
-              type="email"
-              class="form-control"
-              id="emailAddress"
-              [(ngModel)]="loginData.emailAddress"
-              name="emailAddress"
-              required
-            />
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <h2 class="text-center">Login</h2>
+      <form (submit)="onSubmit()" method="post" #loginForm="ngForm">
+        <div class="mb-3">
+          <label for="emailAddress" class="form-label">Email Address</label>
+          <input
+            type="email"
+            class="form-control"
+            id="emailAddress"
+            [(ngModel)]="loginData.emailAddress"
+            name="emailAddress"
+            required
+            email
+          />
+          <div *ngIf="loginForm.controls['emailAddress']?.invalid && loginForm.controls['emailAddress']?.touched" class="text-danger">
+            <small *ngIf="loginForm.controls['emailAddress']?.errors?.['required']">Email jest wymagany.</small>
+            <small *ngIf="loginForm.controls['emailAddress']?.errors?.['email']">Nieprawidłowy format adresu email.</small>
           </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              [(ngModel)]="loginData.password"
-              name="password"
-              required
-            />
-          </div>
-          <button type="submit" class="btn btn-primary w-100">Login</button>
-        </form>
-        <div class="nav-item">
-           <button class="btn btn-sm btn-outline-secondary mt-3" routerLink="/rejestracja" >Zarejestruj się</button>
         </div>
-      </div>
-      <div *ngIf="errorMessage" class="alert alert-danger fw-bold mt-3 fs-3 text-center mx-auto">
-        {{ errorMessage }}
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            [(ngModel)]="loginData.password"
+            name="password"
+            required
+            minlength="5"
+          />
+          <div *ngIf="loginForm.controls['password']?.invalid && loginForm.controls['password']?.touched" class="text-danger">
+            <small *ngIf="loginForm.controls['password']?.errors?.['required']">Hasło jest wymagane.</small>
+            <small *ngIf="loginForm.controls['password']?.errors?.['minlength']">Hasło musi mieć co najmniej 6 znaków.</small>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">Login</button>
+      </form>
+      <div class="nav-item">
+        <button class="btn btn-sm btn-outline-secondary mt-3" routerLink="/rejestracja">Zarejestruj się</button>
       </div>
     </div>
+    <div *ngIf="errorMessage" class="alert alert-danger fw-bold mt-3 fs-3 text-center mx-auto">
+      {{ errorMessage }}
+    </div>
   </div>
-  
-  TODO: DODAC VALIDACJE DANYCH
+</div>

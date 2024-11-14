@@ -13,12 +13,25 @@ import { jwtDecode } from "jwt-decode";
 })
 export class AuthService {
   private apiUrl = 'http://localhost:5120'; 
-
+  private loginRedirect: boolean =false; 
   constructor(
     private http: HttpClient,
     private router: Router,
     private storageService: BrowserStorageService 
   ) {}
+
+
+  setLoginRedirect(value: boolean) {
+    this.loginRedirect = value;
+  }
+
+  getLoginRedirect(): boolean {
+    return this.loginRedirect;
+  }
+
+  clearLoginRedirect() {
+    this.loginRedirect = false;
+  }
 
   isLoggedIn(): boolean {
     const token = this.storageService.getItem('authToken');

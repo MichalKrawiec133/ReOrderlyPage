@@ -10,12 +10,20 @@
     border-radius: 8px;
     padding: 20px;
     margin-top: 20px;
+    background-color: #f9f9f9; 
+}
+
+.order-items-list {
+    list-style-type: none;
+    padding: 0; 
 }
 
 .order-item {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
+    border-bottom: 1px solid #eee; 
+    padding-bottom: 10px; 
 }
 
 .order-item-image {

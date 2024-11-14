@@ -30,8 +30,14 @@ export class LoginComponent {
 
     this.authService.login(this.loginData).subscribe(
       response => {
-        // zalogowano
-        this.router.navigate(['/profil']);
+        const fromOrderSummary = this.authService.getLoginRedirect();
+        console.log(fromOrderSummary)
+        if (fromOrderSummary) {
+          this.authService.clearLoginRedirect(); 
+          this.router.navigate(['/order-summary']); 
+        } else {
+          this.router.navigate(['/profil']);
+        }
       },
       error => {
         // blad logowania

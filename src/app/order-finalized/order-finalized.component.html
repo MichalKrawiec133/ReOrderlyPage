@@ -4,15 +4,14 @@
 
     <div class="order-summary">
         <h3>Podsumowanie zamówienia</h3>
-        <ul>
-            <li *ngFor="let item of orderItems">
-                <div class="order-item">
-                    <img [src]="item.products.imagePath" alt="{{ item.products.productName }}" class="order-item-image" />
-                    <div class="order-item-details">
-                        <h4>{{ item.products.productName }}</h4>
-                        <p>Ilość: {{ item.orderItemQuantity }}</p>
-                        <p>Cena: {{ item.products.productPrice }} zł</p>
-                    </div>
+        <ul class="order-items-list">
+            <li *ngFor="let item of orderItems" class="order-item">
+                <img [src]="'assets' + item.products.imagePath" alt="{{ item.products.productName }}" class="order-item-image" />
+                <div class="order-item-details">
+                    <h4>{{ item.products.productName }}</h4>
+                    <p>Ilość: {{ item.orderItemQuantity }}</p>
+                    <p>Cena produktu: {{ item.products.productPrice }} zł</p>
+                    <p>Łączna cena produktu: {{ item.products.productPrice * item.orderItemQuantity }} zł</p>
                 </div>
             </li>
         </ul>
@@ -23,6 +22,6 @@
     </div>
 
     <div class="text-center">
-        <button (click)="goBack()" class="btn btn-primary">Powrót do sklepu</button>
+        <button (click)="goBack()" class="btn btn-primary mt-3">Powrót do sklepu</button>
     </div>
 </div>

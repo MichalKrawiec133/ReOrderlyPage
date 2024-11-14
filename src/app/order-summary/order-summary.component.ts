@@ -9,6 +9,9 @@ import { Product } from '../models/product.model';
 import { AuthService } from '../services/auth.service';
 import { OrderStatus } from '../models/order-status.model';
 import { Router } from '@angular/router';
+import { OrderDataService } from '../services/order-data.service';
+import { ConfirmDialogService } from '../services/confirm-dialog.service';
+
 
 @Component({
   selector: 'app-order-summary',
@@ -27,7 +30,14 @@ export class OrderSummaryComponent implements OnInit {
   itemsProduct: Product[]=[];
   orderStatuses: OrderStatus[] = [];
 
-  constructor(private cartService: CartService, private router: Router, private orderService: OrderService, private authService: AuthService,) {}
+  constructor(
+    private cartService: CartService, 
+    private router: Router, 
+    private orderService: OrderService, 
+    private authService: AuthService, 
+    private orderDataService: OrderDataService,
+    private confirmDialogService: ConfirmDialogService
+  ) {}
 
   ngOnInit(): void {
     this.items = this.cartService.getItems(); 
@@ -40,90 +50,103 @@ export class OrderSummaryComponent implements OnInit {
   }
   
   placeOrder(): void {
-    
     if (this.items.length === 0) {
-      alert('Koszyk jest pusty'); 
-      return;
+        alert('Koszyk jest pusty'); 
+        return;
     }
 
-    this.itemsProduct = this.items.map(item => ({
-      productId: item.productId,
-      productName: item.productName, 
-      productPrice: item.productPrice,
-      quantityToAdd: item.quantityToAdd,
-      productQuantity: item.productQuantity,
-      imagePath: item.imagePath
-    }));
+    // Otwórz dialog potwierdzenia
+    const dialogData = {
+        title: 'Potwierdzenie zamówienia',
+        message: 'Czy na pewno chcesz złożyć zamówienie?'
+    };
 
-    const orderItemsGet: OrderItems[] = this.items.map(item => {
-      
-      const product = this.itemsProduct.find(p => p.productId === item.productId);
+    this.confirmDialogService.openConfirmDialog(dialogData).subscribe(result => {
+        if (result) {
+            // Użytkownik potwierdził zamówienie
 
-      if (!product) {
-          throw new Error(`Produkt nieznaleziony`);
-      }
+            this.itemsProduct = this.items.map(item => ({
+                productId: item.productId,
+                productName: item.productName, 
+                productPrice: item.productPrice,
+                quantityToAdd: item.quantityToAdd,
+                productQuantity: item.productQuantity,
+                imagePath: item.imagePath
+            }));
 
-      return new OrderItems(
-          0, 
-          item.productId,
-          product, 
-          0, 
-          item.quantityToAdd,
-          item.productPrice*item.quantityToAdd
-      );
-    });
+            const orderItemsGet: OrderItems[] = this.items.map(item => {
+                const product = this.itemsProduct.find(p => p.productId === item.productId);
 
-    const userId = this.authService.getCurrentUserId();
+                if (!product) {
+                    throw new Error(`Produkt nieznaleziony`);
+                }
 
-    if (!userId) {
-      throw new Error(`Id użytkownika nieznaleziono`);
-    }
-    
+                return new OrderItems(
+                    0, 
+                    item.productId,
+                    product, 
+                    0, 
+                    item.quantityToAdd,
+                    item.productPrice * item.quantityToAdd
+                );
+            });
 
-    //logika składania zamówienia jest wykonywana po otrzymaniu statusów z bazy danych. 
-    this.orderService.getStatus().subscribe(
-        (statuses: OrderStatus[]) => {
-            this.orderStatuses = statuses; 
+            const userId = this.authService.getCurrentUserId();
 
-            if (this.orderStatuses.length === 0) {
-                alert('Nie można złożyć zamówienia. Statusy zamówienia są niedostępne.');
-                return;
+            if (!userId) {
+                throw new Error(`Id użytkownika nieznaleziono`);
             }
 
-            // tworzenie zamówienia
-            const order: Order = {
-                orderId: 0, 
-                idUser: userId, 
-                idOrderStatus: this.orderStatuses[0].orderStatusId,
-                orderDate: new Date(), 
-                orderStatus: this.orderStatuses[0], 
-                orderItems: orderItemsGet
-            };
+            // Logika składania zamówienia jest wykonywana po otrzymaniu statusów z bazy danych.
+            this.orderService.getStatus().subscribe(
+                (statuses: OrderStatus[]) => {
+                    this.orderStatuses = statuses; 
 
-            // kontakt z backendem
-            this.orderService.placeOrder(order).subscribe(
-                response => {
-                    console.log(response);
-                    alert('Dziękujemy za zamówienie!'); 
-                    var total = this.calculateTotal();
-                    var order_items = orderItemsGet
-                    this.cartService.clearCart(); 
-                    this.router.navigate(['/order-finalized'], { state: { order_items, total } });
+                    if (this.orderStatuses.length === 0) {
+                        alert('Nie można złożyć zamówienia. Statusy zamówienia są niedostępne.');
+                        return;
+                    }
+
+                    // Tworzenie zamówienia
+                    const order: Order = {
+                        orderId: 0, 
+                        idUser: userId, 
+                        idOrderStatus: this.orderStatuses[0].orderStatusId,
+                        orderDate: new Date(), 
+                        orderStatus: this.orderStatuses[0], 
+                        orderItems: orderItemsGet
+                    };
+
+                    // Kontakt z backendem
+                    this.orderService.placeOrder(order).subscribe(
+                        response => {
+                            
+                            const total = this.totalAmount;
+                            const order_items = orderItemsGet;
+
+                            this.orderDataService.setOrderData(order_items, total);
+                            this.cartService.clearCart(); 
+                            this.router.navigate(['/order-finalized']);
+                        },
+                        error => {
+                            console.error('Error placing order:', error);
+                            alert('Wystąpił błąd podczas składania zamówienia. Spróbuj ponownie.');
+                        }
+                    );
+
                 },
                 error => {
-                    console.error('Error placing order:', error);
-                    alert('Wystąpił błąd podczas składania zamówienia. Spróbuj ponownie.');
+                    console.error('Error fetching order statuses:', error);
+                    alert('Wystąpił błąd podczas pobierania statusów zamówienia.');
                 }
             );
-
-        },
-        error => {
-            console.error('Error fetching order statuses:', error);
-            alert('Wystąpił błąd podczas pobierania statusów zamówienia.');
+        } else {
+            // Użytkownik anulował zamówienie
+            console.log('Zamówienie anulowane');
         }
-    );
+    });
+}
 
-  }
 }
 
 
