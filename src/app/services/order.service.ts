@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Order } from '../models/order.model';
-import { AuthService } from './auth.service';
+
 import { OrderStatus } from '../models/order-status.model';
+
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
   private ordersUrl = 'http://localhost:5120';
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient) {}
 
   getOrders(): Observable<Order[]> {
     const token = localStorage.getItem('authToken');

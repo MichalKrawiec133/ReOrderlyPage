@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service'; 
 import { CartProduct } from '../models/cart-product.model';
-import { CommonModule } from '@angular/common';
+import { NgIf, CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+
 @Component({
   selector: 'app-cart',
   standalone: true,
@@ -11,6 +12,7 @@ import { AuthService } from '../services/auth.service';
 
     CommonModule,
     RouterLink,
+    NgIf
 
   ],
   templateUrl: './cart.component.html',
@@ -43,11 +45,17 @@ export class CartComponent implements OnInit {
     this.items = []; 
   }
   
+  isCartItems():boolean{
+    
+    return !!this.items.length
+    
+  }
+
   goToOrderSummary(): void {
     if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/order-summary']);
     } else {
-      //TODO: dodac jakas weryfikacje ze w koszyku jest cos i dopiero wtedy przekierowac do podsumowania
+      
       this.authService.setLoginRedirect(true);
       this.router.navigate(['/login']); 
     }

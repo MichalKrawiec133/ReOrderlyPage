@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NgIf,NgFor, CommonModule } from '@angular/common';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import { NgIf,NgFor, CommonModule, isPlatformBrowser } from '@angular/common';
 import { OrderService } from '../../services/order.service';
 import { Order } from '../../models/order.model';
 
@@ -21,10 +21,14 @@ export class OrdersComponent implements OnInit{
 
   orders: Order[] = [];
 
-  constructor(private orderService: OrderService) {}
+  constructor(private orderService: OrderService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
-    this.loadOrders();
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadOrders();
+    }
   }
 
   loadOrders(): void {

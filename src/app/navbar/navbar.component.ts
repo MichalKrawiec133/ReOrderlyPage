@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router, private cartService: CartService) {}
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isLoggedIn();
+    //this.isLoggedIn = this.authService.isLoggedIn();
     this.cartService.itemCount$.subscribe(count => {
       this.itemCount = count; 
     });
@@ -32,11 +32,11 @@ export class NavbarComponent implements OnInit {
   }
 
   checkLoginForm(): boolean {
-    return this.isLoggedIn; 
+    return this.authService.isLoggedIn(); 
   }
 
   checkLogin(): void {
-    if (this.isLoggedIn) {
+    if (this.authService.isLoggedIn()) {
       this.router.navigate(['/profil']);
     } else {
       this.router.navigate(['/login']);
@@ -44,9 +44,9 @@ export class NavbarComponent implements OnInit {
   }
 
   logout(): void {
-    if (this.isLoggedIn) {
+    if (this.authService.isLoggedIn()) {
       this.authService.logout();
-      this.isLoggedIn = false; 
+      
       this.router.navigate(['/']);
     }
   }

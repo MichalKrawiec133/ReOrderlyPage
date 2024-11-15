@@ -35,10 +35,14 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     const token = this.storageService.getItem('authToken');
+    //console.log(new Date());
+    //console.log(token)
+    //console.log(!!token)
     return !!token; 
 }
 
-//TODO: jak wygaśnie token to się robią problemy z przyciskami bo strona się w sumie nie odświeża więc navbar itp nie wiedzą ze przycisk wygasł. 
+//TODO: jak wygaśnie token to się robią problemy z przyciskami bo strona się w sumie nie odświeża więc navbar itp nie wiedzą ze przycisk wygasł.
+//była proba zrobienia interceptora ale mnostwo z tym problemow bylo wiec nie ma. 
   login(credentials: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       tap((response: any) => {
@@ -50,6 +54,7 @@ export class AuthService {
   }
 
   logout(): void {
+    //console.log("test")
     this.storageService.removeItem('authToken'); 
     this.router.navigate(['/']);
   }

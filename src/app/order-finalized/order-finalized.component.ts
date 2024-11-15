@@ -31,6 +31,12 @@ export class OrderFinalizedComponent implements OnInit {
   
   }
 
+  goProfile(): void{
+
+    this.router.navigate(['/profil']);
+
+  }
+
   goBack(): void {
     this.router.navigate(['/']); 
   }

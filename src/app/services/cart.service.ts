@@ -67,6 +67,7 @@ export class CartService {
   }
 
   getItemCount(): number {
+    //console.log(this.items.length)
     return this.items.length; 
   }
   

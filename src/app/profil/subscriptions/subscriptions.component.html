@@ -24,8 +24,10 @@
                             <thead>
                                 <tr>
                                     <th>Produkt</th>
+                                    <th></th>
                                     <th>Ilość</th>
                                     <th>Cena</th>
+                                    
                                     <th>Okres subskrypcji</th>
                                     <th style="border: none;"></th>
                                     <th style="border: none;"></th>
@@ -36,6 +38,9 @@
                                 <ng-container *ngFor="let item of subscription.orderSubscriptionProducts">
                                     <tr>
                                         <td>{{ item.products.productName }}</td>
+                                        <td>
+                                            <img [src]="'assets' + item.products.imagePath" alt="{{ item.products.productName }}" class="order-item-image" />
+                                        </td>
                                         <td>
                                             
                                             <input *ngIf="isEditing(subscription.orderSubscriptionId)" 

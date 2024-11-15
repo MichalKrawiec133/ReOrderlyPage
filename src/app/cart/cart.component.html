@@ -23,8 +23,8 @@
             </div>
         </div>
     </div>
-    <button (click)="clearCart()" class="btn btn-danger my-3">Wyczyść koszyk</button>
-    <button (click)="goToOrderSummary()" class="btn btn-success my-3 ms-3">Przejdź do podsumowania zamówienia</button>
+    <button *ngIf="isCartItems()" (click)="clearCart()" class="btn btn-danger my-3">Wyczyść koszyk</button>
+    <button *ngIf="isCartItems()" (click)="goToOrderSummary()" class="btn btn-success my-3 ms-3">Przejdź do podsumowania zamówienia</button>
 
 
 </div>
