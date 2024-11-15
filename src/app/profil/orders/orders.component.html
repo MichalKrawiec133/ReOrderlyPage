@@ -21,7 +21,6 @@
                             <thead>
                                 <tr>
                                     <th>Produkt</th>
-                                    <th></th> 
                                     <th>Ilość</th>
                                     <th>Cena</th>
                                 </tr>
@@ -29,10 +28,9 @@
                             <tbody>
                                 <ng-container *ngFor="let item of order.orderItems">
                                     <tr>
-                                        <td>{{ item.products.productName }}</td>
-                                        <td>
+                                        <td>{{ item.products.productName }}
                                             <img [src]="'assets' + item.products.imagePath" alt="{{ item.products.productName }}" class="order-item-image" />
-                                        </td> 
+                                        </td>
                                         <td>{{ item.orderItemQuantity }}</td>
                                         <td>{{ item.orderPrice }} zł</td>
                                     </tr>

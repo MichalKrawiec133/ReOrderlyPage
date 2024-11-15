@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" routerLink="">Home</a>
+          <a class="nav-link" routerLink="">Produkty</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="">Features</a>
@@ -18,9 +18,7 @@
         
       
       </ul>
-      <!-- <span class="navbar-text">
-        Navbar text with an inline element
-      </span> -->
+      
     </div>
     <div class="position-relative">
       <button class="btn btn-outline-primary me-2 ml-auto" routerLink="/cart" type="button">
@@ -28,15 +26,15 @@
           <span *ngIf="itemCount > 0" class="position-absolute top-0 start-90 translate-middle badge rounded-pill bg-danger">{{ itemCount }}</span>
       </button>
     </div>
-    <button *ngIf="checkLoginForm()" class="btn btn-outline-success me-2 ml-auto" routerLink="/profil" type="button">
+    <button *ngIf="checkLoginForm()" class="btn btn-outline-primary me-2 ml-auto" routerLink="/profil" type="button">
       Profil 
     </button>
 
-    <button *ngIf="!checkLoginForm()" class="btn btn-outline-success me-2 ml-auto" (click)="checkLogin()" type="button">
+    <button *ngIf="!checkLoginForm()" class="btn btn-outline-primary me-2 ml-auto" (click)="checkLogin()" type="button">
       Zaloguj się 
     </button>
 
-    <button *ngIf="checkLoginForm()" class="btn btn-outline-success me-2 ml-auto" (click)="logout()" type="button">
+    <button *ngIf="checkLoginForm()" class="btn btn-outline-primary me-2 ml-auto" (click)="logout()" type="button">
       Wyloguj
     </button>
 

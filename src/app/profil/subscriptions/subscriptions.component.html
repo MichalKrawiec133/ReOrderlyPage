@@ -3,72 +3,67 @@
     <div class="accordion" id="subscriptionsAccordion">
         <ng-container *ngFor="let subscription of subscriptions">
             <div class="accordion-item">
-                <h2 class="accordion-header" [attr.id]="'heading' + subscription.orderSubscriptionId">
-                    <button class="accordion-button" type="button" 
+                <h2 class="accordion-header d-flex align-items-stretch" [attr.id]="'heading' + subscription.orderSubscriptionId">
+                    <button class="accordion-button flex-grow-1 rounded-end-0" type="button" 
                             data-bs-toggle="collapse" 
                             [attr.data-bs-target]="'#collapse' + subscription.orderSubscriptionId" 
                             [attr.aria-expanded]="true" 
                             [attr.aria-controls]="'collapse' + subscription.orderSubscriptionId">
                         Subskrypcja #{{ subscription.orderSubscriptionId }} - Data zamówienia: {{ subscription.orderDate | date: 'dd/MM/yyyy' }}
                     </button>
-                    <button class="btn btn-danger btn-sm ms-2" (click)="onCancelSubscription(subscription.orderSubscriptionId)">
+                    <button class="btn btn-danger btn-sm rounded-0 rounded-end d-flex align-items-center" (click)="onCancelSubscription(subscription.orderSubscriptionId)">
                         Anuluj Subskrypcję
-                      </button>
+                    </button>
                 </h2>
+                
+                
                 
                 <div [attr.id]="'collapse' + subscription.orderSubscriptionId" class="accordion-collapse collapse" 
                      [attr.aria-labelledby]="'heading' + subscription.orderSubscriptionId" 
                      data-bs-parent="#subscriptionsAccordion">
-                    <div class="accordion-body">
-                        <table class="table table-bordered table-striped table-hover text-center">
+                    <div class="accordion-body ">
+                        <table class="table table-bordered table-striped table-hover text-center align-middle">
                             <thead>
                                 <tr>
                                     <th>Produkt</th>
-                                    <th></th>
                                     <th>Ilość</th>
                                     <th>Cena</th>
-                                    
                                     <th>Okres subskrypcji</th>
-                                    <th style="border: none;"></th>
-                                    <th style="border: none;"></th>
-                                    <th style="border: none;"></th> 
+                                    <th style="border: none;">Edytuj</th>
+                                    <th>Usuń</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <ng-container *ngFor="let item of subscription.orderSubscriptionProducts">
                                     <tr>
-                                        <td>{{ item.products.productName }}</td>
                                         <td>
-                                            <img [src]="'assets' + item.products.imagePath" alt="{{ item.products.productName }}" class="order-item-image" />
+                                            {{ item.products.productName }}
+                                            <img [src]="'assets' + item.products.imagePath" alt="{{ item.products.productName }}" class="order-item-image ms-3" />
                                         </td>
                                         <td>
-                                            
                                             <input *ngIf="isEditing(subscription.orderSubscriptionId)" 
                                                    type="number" 
                                                    [(ngModel)]="item.productQuantity" 
                                                    min="1" 
                                                    class="form-control form-control-sm edit-input" />
-                                            
                                             <span *ngIf="!isEditing(subscription.orderSubscriptionId)">{{ item.productQuantity }}</span>
                                         </td>
-                                        <td>{{ item.products.productPrice }} zł</td>
+                                        <td>{{ item.products.productPrice * item.productQuantity }} zł</td>
                                         <td>
-                                            
                                             <input *ngIf="isEditing(subscription.orderSubscriptionId)" 
                                                    type="number" 
                                                    [(ngModel)]="subscription.intervalDays" 
                                                    min="1" 
                                                    class="form-control form-control-sm edit-input" />
-                                            
                                             <span *ngIf="!isEditing(subscription.orderSubscriptionId)">{{ subscription.intervalDays }} dni</span>
                                         </td>
-                                        <td style="border: none;" (click)="onCancelProduct(item.products, subscription.orderSubscriptionId)">
-                                            <i class="bi bi-trash"></i> 
-                                          </td>
-                                        <td style="border: none;" (click)="onEdit(item, subscription)">
-                                            <i class="bi bi-pencil-square text-primary"></i>
+                                        <td (click)="onEdit(item, subscription)">
+                                            <i class="bi bi-pencil-square text-primary fs-2"></i>
                                         </td>
-                                        <td style="border: none;" *ngIf="isEditing(subscription.orderSubscriptionId)">
+                                        <td (click)="onCancelProduct(item.products, subscription.orderSubscriptionId)">
+                                            <i class="bi bi-trash fs-2"></i>
+                                        </td>
+                                        <td *ngIf="isEditing(subscription.orderSubscriptionId)">
                                             <button class="btn btn-success btn-sm" (click)="onConfirmChanges(subscription)">
                                                 Zatwierdź zmiany
                                             </button>
@@ -77,6 +72,7 @@
                                 </ng-container>
                             </tbody>
                         </table>
+                        
                     </div>
                 </div>
             </div>
