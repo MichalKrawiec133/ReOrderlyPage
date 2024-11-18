@@ -1,2 +1,30 @@
-<p>begin-subscription works!</p>
-//TODO: zrobic komponent subskrypcji lub jakos wymyslic co z subskrypcjami i panel administratora. 
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Subskrypcje</h2>
+    <div *ngIf="items.length === 0" class="alert alert-info text-center">
+        Brak subskrypcji.
+    </div>
+    <div *ngFor="let item of items" class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4 d-flex align-items-center">
+                <img [src]="'assets' + item.products.imagePath" class="img-fluid rounded-start" alt="{{ item.products.productName }}" />
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.products.productName }}</h5>
+                    <p class="card-text">Cena: {{ item.products.productPrice }} zł</p>
+                    <p class="card-text">Ilość w subskrypcji: {{ item.productQuantity }}</p> 
+                    
+                    <div>
+                        <button (click)="increaseQuantity(item)" class="btn btn-outline-primary btn-sm">+</button>
+                        <button (click)="decreaseQuantity(item)" class="btn btn-outline-primary btn-sm">-</button>
+                        <button (click)="removeFromSubscription(item)" class="btn btn-outline-danger btn-sm">x</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button *ngIf="hasSubscriptions()" (click)="clearSubscriptions()" class="btn btn-danger my-3">Wyczyść subskrypcje</button>
+    <button *ngIf="hasSubscriptions()" (click)="goToOrderSummary()" class="btn btn-success my-3 ms-3">Przejdź do podsumowania zamówienia</button>
+    <button [routerLink]="['/produkty']" routerLinkActive="router-link-active"  class="btn btn-success my-3 ms-3">Powrót do produktów</button>
+</div>

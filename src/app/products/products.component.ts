@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { CartService } from '../services/cart.service';
 import { FormsModule } from '@angular/forms';
 import { CartProduct } from '../models/cart-product.model';
+import { BeginSubscriptionService } from '../services/begin-subscription.service';
+import { OrderSubscriptionProducts } from '../models/order-subscription-products.model';
 
 @Component({
   selector: 'app-products',
@@ -21,7 +23,7 @@ export class ProductsComponent implements OnInit {
   
   quantity: { [key: number]: number } = {};
 
-  constructor(private productService: ProductService, private cartService: CartService) {}
+  constructor(private productService: ProductService, private cartService: CartService, private beginSubscriptionService: BeginSubscriptionService) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -66,6 +68,28 @@ export class ProductsComponent implements OnInit {
     this.quantity[product.productId] = 1; 
 
   }
+
+
+  //TODO: naprawic subskrypcje bo blad jest. 
+  addToSubscription(orderSubscriptionProducts: OrderSubscriptionProducts): void {
+    const qty = this.quantity[orderSubscriptionProducts.orderSubscriptionProductId] || 1; 
+
+    if (qty > orderSubscriptionProducts.productQuantity) {
+        alert(`Nie możesz dodać więcej niż ${orderSubscriptionProducts.productQuantity} sztuk tego produktu.`);
+        return; 
+    } else if (qty < 1) {
+        alert(`Dodaj minimum 1 sztukę tego produktu.`);
+        return;
+    }
+
+  
+
+    this.beginSubscriptionService.addToSubscription(orderSubscriptionProducts); 
+
+    this.quantity[orderSubscriptionProducts.orderSubscriptionProductId] = 1; 
+}
+
+
 
 }
 

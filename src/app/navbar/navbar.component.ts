@@ -3,7 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { CartService } from '../services/cart.service';
-
+import { BeginSubscriptionService } from '../services/begin-subscription.service';
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -17,13 +17,16 @@ import { CartService } from '../services/cart.service';
 export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false; 
   itemCount: number = 0;
-
-  constructor(private authService: AuthService, private router: Router, private cartService: CartService) {}
+  itemCountSubscription: number = 0;
+  constructor(private authService: AuthService, private router: Router, private cartService: CartService, private beginSubscriptionService: BeginSubscriptionService) {}
 
   ngOnInit(): void {
     //this.isLoggedIn = this.authService.isLoggedIn();
     this.cartService.itemCount$.subscribe(count => {
       this.itemCount = count; 
+    });
+    this.beginSubscriptionService.itemCount$.subscribe(count => {
+      this.itemCountSubscription = count; 
     });
   }
 

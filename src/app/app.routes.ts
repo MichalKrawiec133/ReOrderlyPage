@@ -7,6 +7,7 @@ import { ProductsComponent } from './products/products.component';
 import { CartComponent } from './cart/cart.component';
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
 import { OrderFinalizedComponent } from './order-finalized/order-finalized.component';
+import { BeginSubscriptionComponent } from './begin-subscription/begin-subscription.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/produkty', pathMatch: 'full' }, 
@@ -18,5 +19,7 @@ export const routes: Routes = [
     { path: 'produkty', component: ProductsComponent },
     { path: 'cart', component: CartComponent },
     { path: 'order-summary', component: OrderSummaryComponent }, 
-    { path: 'order-finalized', component: OrderFinalizedComponent}
+    { path: 'order-finalized', component: OrderFinalizedComponent},
+    { path: 'begin-subscription', component: BeginSubscriptionComponent}
+
 ];

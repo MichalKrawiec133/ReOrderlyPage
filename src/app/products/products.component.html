@@ -11,9 +11,14 @@
                     
                     <input type="number" [(ngModel)]="quantity[product.productId]" min="1" [max]="product.productQuantity" class="form-control mb-2" placeholder="Ilość do dodania" />
                     <button 
-                        class="btn btn-primary" 
+                        class="btn btn-primary me-2" 
                         (click)="addToCart(product)">
                         <i class="bi bi-cart-fill"></i> Dodaj do koszyka
+                    </button>
+                    <button 
+                        class="btn btn-success ms-2" 
+                        (click)="addToSubscription(product)">
+                        <i class="bi bi-plus-circle "></i> Dodaj do subskrypcji
                     </button>
                 </div>
             </div>

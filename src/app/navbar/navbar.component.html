@@ -20,6 +20,14 @@
       </ul>
       
     </div>
+
+    <div class="position-relative">
+      <button class="btn btn-outline-primary me-2 ml-auto" routerLink="/begin-subscription" type="button">
+          <i class="bi bi-plus-circle"></i> 
+          Subskrypcje
+          <span *ngIf="itemCount > 0" class="position-absolute top-0 start-90 translate-middle badge rounded-pill bg-danger">{{ itemCountSubscription }}</span>
+      </button>
+  </div>  
     <div class="position-relative">
       <button class="btn btn-outline-primary me-2 ml-auto" routerLink="/cart" type="button">
           <i class="bi bi-cart-fill"></i>
