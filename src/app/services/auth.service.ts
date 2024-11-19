@@ -13,7 +13,8 @@ import { jwtDecode } from "jwt-decode";
 })
 export class AuthService {
   private apiUrl = 'http://localhost:5120'; 
-  private loginRedirect: boolean =false; 
+  private loginRedirect: boolean[] = []; 
+  
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -21,16 +22,16 @@ export class AuthService {
   ) {}
 
 
-  setLoginRedirect(value: boolean) {
-    this.loginRedirect = value;
+  setLoginRedirect(id:number,value: boolean) {
+    this.loginRedirect[id] = value;
   }
 
-  getLoginRedirect(): boolean {
+  getLoginRedirect(): boolean[] {
     return this.loginRedirect;
   }
 
-  clearLoginRedirect() {
-    this.loginRedirect = false;
+  clearLoginRedirect(id:number) {
+    this.loginRedirect[id] = false;
   }
 
   isLoggedIn(): boolean {

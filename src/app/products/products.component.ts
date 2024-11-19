@@ -71,7 +71,6 @@ export class ProductsComponent implements OnInit {
   }
 
 
-  //TODO: naprawic subskrypcje bo blad jest. 
   addToSubscription(product: Product): void {
     const qty = this.quantity[product.productId] || 1; 
 

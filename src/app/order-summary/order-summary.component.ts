@@ -55,7 +55,6 @@ export class OrderSummaryComponent implements OnInit {
         return;
     }
 
-    // Otwórz dialog potwierdzenia
     const dialogData = {
         title: 'Potwierdzenie zamówienia',
         message: 'Czy na pewno chcesz złożyć zamówienie?'

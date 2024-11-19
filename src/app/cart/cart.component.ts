@@ -56,7 +56,7 @@ export class CartComponent implements OnInit {
       this.router.navigate(['/order-summary']);
     } else {
       
-      this.authService.setLoginRedirect(true);
+      this.authService.setLoginRedirect(0,true);
       this.router.navigate(['/login']); 
     }
   }

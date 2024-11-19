@@ -2,7 +2,9 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { OrderSubscriptionProducts } from '../models/order-subscription-products.model'; // Upewnij się, że ścieżka jest poprawna
 import { isPlatformBrowser } from '@angular/common';
-
+import { OrderSubscription } from '../models/order-subscription.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,8 +12,9 @@ export class BeginSubscriptionService {
   private items: OrderSubscriptionProducts[] = []; 
   private itemCountSubject = new BehaviorSubject<number>(0);
   itemCount$ = this.itemCountSubject.asObservable();
+  private ordersUrl = 'http://localhost:5120';
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private http: HttpClient) {
     this.loadSubscriptions(); 
   }
 
@@ -27,7 +30,7 @@ export class BeginSubscriptionService {
     this.updateLocalStorage();
     this.updateItemCount();
   }
-//TODO: tu nie działa. problemy z id 
+
   increaseQuantity(product: OrderSubscriptionProducts): void {
     const existingProductIndex = this.items.findIndex(item => item.products.productId === product.products.productId);
 
@@ -38,8 +41,8 @@ export class BeginSubscriptionService {
     }
   }
 
-  decreaseQuantity(item: OrderSubscriptionProducts): void {
-    const existingProductIndex = this.items.findIndex(subscriptionItem => subscriptionItem.orderSubscriptionProductId === item.orderSubscriptionProductId);
+  decreaseQuantity(product: OrderSubscriptionProducts): void {
+    const existingProductIndex = this.items.findIndex(item => item.products.productId === product.products.productId);
     if (existingProductIndex !== -1 && this.items[existingProductIndex].productQuantity > 1) {
       this.items[existingProductIndex].productQuantity--; 
       this.updateLocalStorage(); 
@@ -47,10 +50,10 @@ export class BeginSubscriptionService {
     }
   }
 
-  removeFromSubscription(item: OrderSubscriptionProducts): void {
-    const index = this.items.findIndex(subscriptionItem => subscriptionItem.orderSubscriptionProductId === item.orderSubscriptionProductId);
-    if (index > -1) {
-      this.items.splice(index, 1); 
+  removeFromSubscription(product: OrderSubscriptionProducts): void {
+    const existingProductIndex = this.items.findIndex(item => item.products.productId === product.products.productId);
+    if (existingProductIndex > -1) {
+      this.items.splice(existingProductIndex, 1); 
       this.updateLocalStorage(); 
       this.updateItemCount();
     }
@@ -90,5 +93,15 @@ export class BeginSubscriptionService {
         this.updateItemCount();
       }
     }
+  }
+
+  placeOrder(orderSubscription: OrderSubscription): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post(`${this.ordersUrl}/subscribe`, orderSubscription, { headers });
   }
 }

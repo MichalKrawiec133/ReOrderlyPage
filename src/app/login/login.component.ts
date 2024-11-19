@@ -32,9 +32,12 @@ export class LoginComponent {
       response => {
         const fromOrderSummary = this.authService.getLoginRedirect();
         
-        if (fromOrderSummary) {
-          this.authService.clearLoginRedirect(); 
+        if (fromOrderSummary[0]) {
+          this.authService.clearLoginRedirect(0); 
           this.router.navigate(['/order-summary']); 
+        } else if(fromOrderSummary[1]) {
+          this.authService.clearLoginRedirect(1); 
+          this.router.navigate(['/begin-subscription']);
         } else {
           this.router.navigate(['/profil']);
         }
