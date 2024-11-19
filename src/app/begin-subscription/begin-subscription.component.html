@@ -31,7 +31,7 @@
     </div>
     <div *ngIf="hasSubscriptions()" class="mb-2">
         <label for="orderDate">Data zamówienia:</label>
-        <input type="date" [(ngModel)]="currentDate" id="orderDate" class="form-control"/>
+        <input type="date" [(ngModel)]="orderDate" id="orderDate" class="form-control"/>
     </div>
     <button *ngIf="hasSubscriptions()" (click)="clearSubscriptions()" class="btn btn-danger me-3 mb-3">Wyczyść subskrypcje</button>
 

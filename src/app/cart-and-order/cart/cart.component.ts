@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CartService } from '../services/cart.service'; 
-import { CartProduct } from '../models/cart-product.model';
+import { CartService } from '../../services/cart.service'; 
+import { CartProduct } from '../../models/cart-product.model';
 import { NgIf, CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-cart',

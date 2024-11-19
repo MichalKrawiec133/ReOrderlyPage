@@ -9,7 +9,7 @@
                             [attr.data-bs-target]="'#collapse' + subscription.orderSubscriptionId" 
                             [attr.aria-expanded]="true" 
                             [attr.aria-controls]="'collapse' + subscription.orderSubscriptionId">
-                        Subskrypcja #{{ subscription.orderSubscriptionId }} - Data zamówienia: {{ subscription.orderDate | date: 'dd/MM/yyyy' }}
+                        Subskrypcja #{{ subscription.orderSubscriptionId }} - Data rozpoczęcia subskrypcji: {{ subscription.orderDate | date: 'dd/MM/yyyy' }}
                     </button>
                     <button class="btn btn-danger btn-sm rounded-0 rounded-end d-flex align-items-center" (click)="onCancelSubscription(subscription.orderSubscriptionId)">
                         Anuluj Subskrypcję

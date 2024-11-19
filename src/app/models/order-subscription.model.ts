@@ -5,14 +5,14 @@ export class OrderSubscription {
     orderSubscriptionId: number;
     user: User; 
     intervalDays: number;
-    orderDate: Date; 
+    orderDate: string; 
     orderSubscriptionProducts: OrderSubscriptionProducts[]; 
 
     constructor(
         orderSubscriptionId: number,
         user: User,
         intervalDays: number,
-        orderDate: Date,
+        orderDate: string,
         orderSubscriptionProducts: OrderSubscriptionProducts[] 
     ) {
         this.orderSubscriptionId = orderSubscriptionId;

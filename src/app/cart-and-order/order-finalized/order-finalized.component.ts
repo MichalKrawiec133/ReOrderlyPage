@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgFor } from '@angular/common';
-import { OrderItems } from '../models/order-items.model';
-import { OrderDataService } from '../services/order-data.service';
+import { OrderItems } from '../../models/order-items.model';
+import { OrderDataService } from '../../services/order-data.service';
 
 @Component({
   selector: 'app-order-finalized',

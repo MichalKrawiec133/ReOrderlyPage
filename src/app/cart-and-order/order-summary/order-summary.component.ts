@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { CartService } from '../services/cart.service';
-import { CartProduct } from '../models/cart-product.model';
+import { CartService } from '../../services/cart.service';
+import { CartProduct } from '../../models/cart-product.model';
 import { CommonModule } from '@angular/common';
-import { Order } from '../models/order.model';
-import { OrderItems } from '../models/order-items.model';
-import { OrderService } from '../services/order.service';
-import { Product } from '../models/product.model';
-import { AuthService } from '../services/auth.service';
-import { OrderStatus } from '../models/order-status.model';
+import { Order } from '../../models/order.model';
+import { OrderItems } from '../../models/order-items.model';
+import { OrderService } from '../../services/order.service';
+import { Product } from '../../models/product.model';
+import { AuthService } from '../../services/auth.service';
+import { OrderStatus } from '../../models/order-status.model';
 import { Router } from '@angular/router';
-import { OrderDataService } from '../services/order-data.service';
-import { ConfirmDialogService } from '../services/confirm-dialog.service';
+import { OrderDataService } from '../../services/order-data.service';
+import { ConfirmDialogService } from '../../services/confirm-dialog.service';
 
 
 @Component({

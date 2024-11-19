@@ -29,7 +29,7 @@ export class BeginSubscriptionComponent implements OnInit {
   items: OrderSubscriptionProducts[] = [];
  
   intervalDays: number = 1;
-  orderDate: Date = new Date();
+  orderDate: string = "";
 
   constructor(
     private beginSubscriptionService: BeginSubscriptionService,
@@ -42,6 +42,7 @@ export class BeginSubscriptionComponent implements OnInit {
 
   ngOnInit(): void {
     this.items = this.beginSubscriptionService.getItems(); 
+    this.orderDate = new Date().toISOString().split('T')[0];
   }
 
   increaseQuantity(item: OrderSubscriptionProducts): void {
@@ -112,8 +113,8 @@ export class BeginSubscriptionComponent implements OnInit {
               this.beginSubscriptionService.placeOrder(orderSubscription).subscribe(
                 response => {
                   this.clearSubscriptions();
-                  //TODO:logika po złożeniu subskrypcji, profil chwilowo ustawiony (clear koszyka itd) default data tez nie dziala bo js nie obsluguje typu dateonly :)
-                  //cała baza i front do zmiany daty na string.     
+                  //TODO:logika po złożeniu subskrypcji, profil chwilowo ustawiony 
+                  //TODO:oraz panel admina do zrobienia.
                   this.router.navigate(['/profil']);
                 },
                 error => {
