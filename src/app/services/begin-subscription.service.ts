@@ -16,7 +16,7 @@ export class BeginSubscriptionService {
   }
 
   addToSubscription(product: OrderSubscriptionProducts): void {
-    const existingProductIndex = this.items.findIndex(item => item.orderSubscriptionProductId === product.orderSubscriptionProductId);
+    const existingProductIndex = this.items.findIndex(item => item.products.productId === product.products.productId);
 
     if (existingProductIndex !== -1) {
       this.items[existingProductIndex].productQuantity += product.productQuantity || 1; 
@@ -27,9 +27,10 @@ export class BeginSubscriptionService {
     this.updateLocalStorage();
     this.updateItemCount();
   }
+//TODO: tu nie działa. problemy z id 
+  increaseQuantity(product: OrderSubscriptionProducts): void {
+    const existingProductIndex = this.items.findIndex(item => item.products.productId === product.products.productId);
 
-  increaseQuantity(item: OrderSubscriptionProducts): void {
-    const existingProductIndex = this.items.findIndex(subscriptionItem => subscriptionItem.orderSubscriptionProductId === item.orderSubscriptionProductId);
     if (existingProductIndex !== -1) {
       this.items[existingProductIndex].productQuantity++; 
       this.updateLocalStorage(); 

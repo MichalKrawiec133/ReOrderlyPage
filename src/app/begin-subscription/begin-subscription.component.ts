@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { OrderSubscriptionProducts } from '../models/order-subscription-products.model';
 import { NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-begin-subscription',
   standalone: true,
@@ -12,7 +13,8 @@ import { CommonModule } from '@angular/common';
 
     RouterLink,
     NgIf,
-    CommonModule
+    CommonModule,
+    FormsModule
 
   ],
   templateUrl: './begin-subscription.component.html',
@@ -20,6 +22,9 @@ import { CommonModule } from '@angular/common';
 })
 export class BeginSubscriptionComponent implements OnInit {
   items: OrderSubscriptionProducts[] = [];
+  quantities: number[] = []; 
+  intervalDays: number = 1;
+  orderDate: Date = new Date();
 
   constructor(private beginSubscriptionService: BeginSubscriptionService, private authService: AuthService, private router: Router) {}
 
@@ -57,4 +62,28 @@ export class BeginSubscriptionComponent implements OnInit {
       this.router.navigate(['/login']); 
     }
   }
+
+
+
+  createOrderSubscription() {
+    // const orderSubscriptionProducts: OrderSubscriptionProducts[] = this.items.map((item, index) => ({
+    //   productId: item.productId,
+    //   quantity: this.quantities[index] || 0 // Use the quantity from the array
+    // }));
+
+    // const orderSubscription = new OrderSubscription(
+    //   0, // or any valid ID
+    //   new User(), // Replace with actual user data
+    //   this.intervalDays,
+    //   this.orderDate,
+    //   orderSubscriptionProducts
+    // );
+
+    // console.log(orderSubscription); // For demonstration purposes
+    // You can now use orderSubscription as needed
+  }
+
+
 }
+
+

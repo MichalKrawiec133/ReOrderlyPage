@@ -1,9 +1,11 @@
 <div class="container mt-4">
     <h2 class="text-center mb-4">Subskrypcje</h2>
+    
     <div *ngIf="items.length === 0" class="alert alert-info text-center">
         Brak subskrypcji.
     </div>
-    <div *ngFor="let item of items" class="card mb-3">
+
+    <div *ngFor="let item of items; let i = index" class="card mb-3">
         <div class="row g-0">
             <div class="col-md-4 d-flex align-items-center">
                 <img [src]="'assets' + item.products.imagePath" class="img-fluid rounded-start" alt="{{ item.products.productName }}" />
@@ -13,7 +15,19 @@
                     <h5 class="card-title">{{ item.products.productName }}</h5>
                     <p class="card-text">Cena: {{ item.products.productPrice }} zł</p>
                     <p class="card-text">Ilość w subskrypcji: {{ item.productQuantity }}</p> 
+
                     
+                    <div class="mb-2">
+                        <label for="intervalDays">Interwał dni:</label>
+                        <input type="number" [(ngModel)]="intervalDays" id="intervalDays" min="1" class="form-control" placeholder="Interwał dni" />
+                    </div>
+
+                    
+                    <div class="mb-2">
+                        <label for="orderDate">Data zamówienia:</label>
+                        <input type="date" [(ngModel)]="orderDate" id="orderDate" class="form-control" />
+                    </div>
+
                     <div>
                         <button (click)="increaseQuantity(item)" class="btn btn-outline-primary btn-sm">+</button>
                         <button (click)="decreaseQuantity(item)" class="btn btn-outline-primary btn-sm">-</button>
@@ -24,7 +38,11 @@
         </div>
     </div>
 
-    <button *ngIf="hasSubscriptions()" (click)="clearSubscriptions()" class="btn btn-danger my-3">Wyczyść subskrypcje</button>
-    <button *ngIf="hasSubscriptions()" (click)="goToOrderSummary()" class="btn btn-success my-3 ms-3">Przejdź do podsumowania zamówienia</button>
-    <button [routerLink]="['/produkty']" routerLinkActive="router-link-active"  class="btn btn-success my-3 ms-3">Powrót do produktów</button>
+    
+    <button *ngIf="hasSubscriptions()" (click)="clearSubscriptions()" class="btn btn-danger me-3 mb-3">Wyczyść subskrypcje</button>
+
+    <button [routerLink]="['/produkty']" routerLinkActive="router-link-active"  class="btn btn-primary mb-3">Powrót do produktów</button>
+
+    
+    <button (click)="createOrderSubscription()" class="btn btn-primary ms-3 mb-3">Utwórz subskrypcję</button>
 </div>

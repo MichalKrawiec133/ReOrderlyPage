@@ -22,6 +22,7 @@ export class ProductsComponent implements OnInit {
   products: Product[] = []; 
   
   quantity: { [key: number]: number } = {};
+  quantitySubscription: { [key: number]: number } = {};
 
   constructor(private productService: ProductService, private cartService: CartService, private beginSubscriptionService: BeginSubscriptionService) {}
 
@@ -71,22 +72,26 @@ export class ProductsComponent implements OnInit {
 
 
   //TODO: naprawic subskrypcje bo blad jest. 
-  addToSubscription(orderSubscriptionProducts: OrderSubscriptionProducts): void {
-    const qty = this.quantity[orderSubscriptionProducts.orderSubscriptionProductId] || 1; 
+  addToSubscription(product: Product): void {
+    const qty = this.quantity[product.productId] || 1; 
 
-    if (qty > orderSubscriptionProducts.productQuantity) {
-        alert(`Nie możesz dodać więcej niż ${orderSubscriptionProducts.productQuantity} sztuk tego produktu.`);
+    if (qty > product.productQuantity) {
+        alert(`Nie możesz dodać więcej niż ${product.productQuantity} sztuk tego produktu.`);
         return; 
     } else if (qty < 1) {
         alert(`Dodaj minimum 1 sztukę tego produktu.`);
         return;
     }
 
-  
+    const beginSubscription = new OrderSubscriptionProducts(
+      0,
+      product,
+      qty
+  );
 
-    this.beginSubscriptionService.addToSubscription(orderSubscriptionProducts); 
+    this.beginSubscriptionService.addToSubscription(beginSubscription); 
 
-    this.quantity[orderSubscriptionProducts.orderSubscriptionProductId] = 1; 
+    this.quantity[product.productId] = 1; 
 }
 
 
