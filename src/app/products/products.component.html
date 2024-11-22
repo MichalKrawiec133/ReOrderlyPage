@@ -1,25 +1,36 @@
 <div class="container mt-4">
     <h2 class="text-center mb-4">Dostępne Produkty</h2>
+    
     <div class="row">
-        <div class="col-md-4" *ngFor="let product of products">
-            <div class="card mb-4">
-                <img [src]="'assets' + product.imagePath" class="card-img-top" alt="{{ product.productName }}" />
-                <div class="card-body">
-                    <h5 class="card-title">{{ product.productName }}</h5>
-                    <p class="card-text">Cena: {{ product.productPrice }} zł</p>
-                    <p class="card-text">Ilość dostępna: {{ product.productQuantity }}</p>
-                    
-                    <input type="number" [(ngModel)]="quantity[product.productId]" min="1" [max]="product.productQuantity" class="form-control mb-2" placeholder="Ilość do dodania" />
-                    <button 
-                        class="btn btn-primary me-2" 
-                        (click)="addToCart(product)">
-                        <i class="bi bi-cart-fill"></i> Dodaj do koszyka
-                    </button>
-                    <button 
-                        class="btn btn-success ms-2" 
-                        (click)="addToSubscription(product)">
-                        <i class="bi bi-plus-circle "></i> Dodaj do subskrypcji
-                    </button>
+        <div class="col-md-4">
+            <input 
+                [(ngModel)]="searchText" 
+                (keyup)="searchProducts()" 
+                placeholder="Wyszukaj produkty..." 
+                class="form-control mb-3" />
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4" *ngFor="let product of productsSearch">
+                <div class="card mb-4">
+                    <img [src]="'assets' + product.imagePath" class="card-img-top mt-2" alt="{{ product.productName }}" />
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.productName }}</h5>
+                        <p class="card-text">Cena: {{ product.productPrice }} zł</p>
+                        <p class="card-text">Ilość dostępna: {{ product.productQuantity }}</p>
+                        
+                        <input type="number" [(ngModel)]="quantity[product.productId]" min="1" [max]="product.productQuantity" class="form-control mb-2" placeholder="Ilość do dodania" />
+                        <button 
+                            class="btn btn-primary me-2 mt-2" 
+                            (click)="addToCart(product)">
+                            <i class="bi bi-cart-fill"></i> Dodaj do koszyka
+                        </button>
+                        <button 
+                            class="btn btn-success mt-2" 
+                            (click)="addToSubscription(product)">
+                            <i class="bi bi-plus-circle"></i> Dodaj do subskrypcji
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

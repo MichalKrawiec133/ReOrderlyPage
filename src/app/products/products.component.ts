@@ -7,7 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { CartProduct } from '../models/cart-product.model';
 import { BeginSubscriptionService } from '../services/begin-subscription.service';
 import { OrderSubscriptionProducts } from '../models/order-subscription-products.model';
-
+import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 @Component({
   selector: 'app-products',
   standalone: true,
@@ -20,21 +21,28 @@ import { OrderSubscriptionProducts } from '../models/order-subscription-products
 })
 export class ProductsComponent implements OnInit {
   products: Product[] = []; 
-  
+  productsSearch: Product[] = [];
+  searchText = '';
   quantity: { [key: number]: number } = {};
   quantitySubscription: { [key: number]: number } = {};
 
-  constructor(private productService: ProductService, private cartService: CartService, private beginSubscriptionService: BeginSubscriptionService) {}
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService, 
+    private beginSubscriptionService: BeginSubscriptionService,
+    private http: HttpClient
+  ) {}
 
   ngOnInit(): void {
     this.loadProducts();
+    this.productsSearch = this.products;
   }
 
   loadProducts(): void {
     this.productService.getProducts().subscribe(
       (data) => {
         this.products = data;
-        
+        this.productsSearch = this.products;
       },
       (error) => {
         console.error('Błąd podczas ładowania produktów', error);
@@ -94,6 +102,18 @@ export class ProductsComponent implements OnInit {
 }
 
 
+
+searchProducts() {
+  if (this.searchText.length < 2) {
+      this.productsSearch = this.products; 
+      return;
+  }
+
+  const searchTerm = this.searchText.toLowerCase();
+  this.productsSearch = this.products.filter(product =>
+      product.productName.toLowerCase().includes(searchTerm)
+  );
+}
 
 }
 

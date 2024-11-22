@@ -34,17 +34,9 @@
           <span *ngIf="itemCount > 0" class="position-absolute top-0 start-90 translate-middle badge rounded-pill bg-danger">{{ itemCount }}</span>
       </button>
     </div>
-    <button *ngIf="checkLoginForm()" class="btn btn-outline-primary me-2 ml-auto" routerLink="/profil" type="button">
-      Profil 
-    </button>
-
-    <button *ngIf="!checkLoginForm()" class="btn btn-outline-primary me-2 ml-auto" (click)="checkLogin()" type="button">
-      Zaloguj się 
-    </button>
-
-    <button *ngIf="checkLoginForm()" class="btn btn-outline-primary me-2 ml-auto" (click)="logout()" type="button">
-      Wyloguj
-    </button>
+    <button *ngIf="isLoggedIn" class="btn btn-outline-primary me-2 ml-auto" routerLink="/profil">Profil</button>
+    <button *ngIf="isLoggedIn" class="btn btn-outline-primary me-2 ml-auto" (click)="logout()">Wyloguj</button>
+    <button *ngIf="!isLoggedIn" class="btn btn-outline-primary me-2 ml-auto" routerLink="/login">Zaloguj</button>
 
     
   </nav>

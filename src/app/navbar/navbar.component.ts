@@ -18,10 +18,19 @@ export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false; 
   itemCount: number = 0;
   itemCountSubscription: number = 0;
-  constructor(private authService: AuthService, private router: Router, private cartService: CartService, private beginSubscriptionService: BeginSubscriptionService) {}
 
+  constructor(
+    private authService: AuthService, 
+    private router: Router, 
+    private cartService: CartService, 
+    private beginSubscriptionService: BeginSubscriptionService) {}
+
+
+    //TODO: w miare działa sprawdzanie ważności tokenu. jeszcze tylko po zmianie navbara przekierowac usera do deault strony.
   ngOnInit(): void {
-    //this.isLoggedIn = this.authService.isLoggedIn();
+    this.authService.loggedIn$.subscribe(status => {
+    this.isLoggedIn = status; 
+    });
     this.cartService.itemCount$.subscribe(count => {
       this.itemCount = count; 
     });
@@ -38,13 +47,6 @@ export class NavbarComponent implements OnInit {
     return this.authService.isLoggedIn(); 
   }
 
-  checkLogin(): void {
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/profil']);
-    } else {
-      this.router.navigate(['/login']);
-    }
-  }
 
   logout(): void {
     if (this.authService.isLoggedIn()) {
