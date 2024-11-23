@@ -62,8 +62,6 @@ export class AuthService implements OnInit{
     return payload.exp > currentTime; 
   }
 
-//TODO: jak wygaśnie token to się robią problemy z przyciskami bo strona się w sumie nie odświeża więc navbar itp nie wiedzą ze przycisk wygasł.
-//była proba zrobienia interceptora ale mnostwo z tym problemow bylo wiec nie ma. 
   login(credentials: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       tap((response: any) => {
