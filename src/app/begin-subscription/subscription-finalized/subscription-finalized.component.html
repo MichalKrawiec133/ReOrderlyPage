@@ -1,0 +1,37 @@
+<div class="subscription-finalized-container">
+    <h2 class="text-center">Dziękujemy za subskrypcję!</h2>
+    <p class="text-center">Twoja subskrypcja została złożona pomyślnie.</p>
+
+    <div class="subscription-summary">
+        <h3>Podsumowanie subskrypcji</h3>
+        <div class="summary-section">
+            <h4>Informacje o subskrypcji</h4>
+            <p><strong>Data rozpoczęcia:</strong> {{ orderDate }}</p>
+            <p><strong>Częstotliwość (dni):</strong> {{ intervalDays }}</p>
+        </div>
+
+        <div class="summary-section">
+            <h4>Produkty</h4>
+            <ul class="products-list">
+                <li *ngFor="let item of items" class="product-item">
+                    <img [src]="'assets' +item.products.imagePath" alt="{{ item.products.productName }}" class="product-item-image" />
+                    <div class="product-item-details">
+                        <h5>{{ item.products.productName }}</h5>
+                        <p>Ilość: {{ item.productQuantity }}</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="total-price">
+            //todo: GUS GUS
+            <!-- If you need to display any total price or additional info, add it here -->
+            <!-- <h4>Łączna kwota: {{ totalAmount }} zł</h4> -->
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button (click)="goToProfile()" class="btn btn-primary mt-3 me-2">Przejdź do profilu</button>
+        <button (click)="goBack()" class="btn btn-primary mt-3 ms-2">Powrót do sklepu</button>
+    </div>
+</div>

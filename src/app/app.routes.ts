@@ -9,6 +9,7 @@ import { OrderSummaryComponent } from './cart-and-order/order-summary/order-summ
 import { OrderFinalizedComponent } from './cart-and-order/order-finalized/order-finalized.component';
 import { BeginSubscriptionComponent } from './begin-subscription/begin-subscription.component';
 import { authGuard } from './guard/auth.guard';
+import { SubscriptionFinalizedComponent } from './begin-subscription/subscription-finalized/subscription-finalized.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/produkty', pathMatch: 'full' }, 
@@ -22,6 +23,7 @@ export const routes: Routes = [
     { path: 'order-summary', component: OrderSummaryComponent, canActivate:[authGuard] }, 
     { path: 'order-finalized', component: OrderFinalizedComponent, canActivate:[authGuard]},
     { path: 'begin-subscription', component: BeginSubscriptionComponent},
+    { path: 'subscription-finalized', component: SubscriptionFinalizedComponent},
     { path: '**', component: ProductsComponent }
 
 ];

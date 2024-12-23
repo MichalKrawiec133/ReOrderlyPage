@@ -48,7 +48,7 @@ export class AuthService implements OnInit{
   isLoggedIn(): boolean {
     const token = this.storageService.getItem('authToken');
     if (!token){
-      console.log("a")
+      //console.log("!token")
       return false;
     } 
   
@@ -126,11 +126,29 @@ export class AuthService implements OnInit{
       return null;
     }
   }
+
   startTokenCheck(): void {
-    this.intervalSubscription = interval(30000).subscribe(() => {
+    this.intervalSubscription = interval(15000).subscribe(() => {
+      const wasLoggedIn = this.loggedInSubject.value;
       this.updateLoggedInStatus();
+      const isTokenValid = this.isLoggedIn();
+      
+  
+      if (!isTokenValid && wasLoggedIn) {
+        //console.log("TokenCheck")
+        this.handleExpiredToken(); 
+      }
     });
   }
+  
+  private handleExpiredToken(): void {
+      
+      this.logout();
+      alert('Twoja sesja wygasła. Zaloguj się ponownie.');
+      this.router.navigate(['/login']);
+    
+  }
+  
 
   stopTokenCheck(): void {
     this.intervalSubscription?.unsubscribe();

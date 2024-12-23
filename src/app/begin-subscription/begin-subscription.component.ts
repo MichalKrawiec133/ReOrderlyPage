@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { OrderSubscription } from '../models/order-subscription.model';
 import { ConfirmDialogService } from '../services/confirm-dialog.service';
 import { UserService } from '../services/user.service';
-
+import { SubscriptionDataService } from '../services/subscription-data.service';
 
 @Component({
   selector: 'app-begin-subscription',
@@ -36,7 +36,8 @@ export class BeginSubscriptionComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private confirmDialogService: ConfirmDialogService,
-    private userService: UserService
+    private userService: UserService,
+    private subscriptionDataService: SubscriptionDataService 
   ) {}
 
 
@@ -112,10 +113,13 @@ export class BeginSubscriptionComponent implements OnInit {
               console.log(orderSubscription)
               this.beginSubscriptionService.placeOrder(orderSubscription).subscribe(
                 response => {
+                  this.subscriptionDataService.setSubscriptionData({
+                    items: orderSubscriptionProducts,
+                    orderDate: this.orderDate,
+                    intervalDays: this.intervalDays
+                  });
                   this.clearSubscriptions();
-                  //TODO:logika po złożeniu subskrypcji, profil chwilowo ustawiony 
-                  //TODO:oraz panel admina do zrobienia.
-                  this.router.navigate(['/profil']);
+                  this.router.navigate(['/subscription-finalized']);
                 },
                 error => {
                   console.error('Error placing order:', error);

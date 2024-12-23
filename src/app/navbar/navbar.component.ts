@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
     private beginSubscriptionService: BeginSubscriptionService) {}
 
 
-    //TODO: w miare działa sprawdzanie ważności tokenu. jeszcze tylko po zmianie navbara przekierowac usera do deault strony.
+
   ngOnInit(): void {
     this.authService.loggedIn$.subscribe(status => {
     this.isLoggedIn = status; 
