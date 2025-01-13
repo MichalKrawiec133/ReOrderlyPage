@@ -30,7 +30,6 @@ export class SubscriptionFinalizedComponent implements OnInit {
     
     } else {
       
-      //todo:
       this.router.navigate(['/']);
     }
   }

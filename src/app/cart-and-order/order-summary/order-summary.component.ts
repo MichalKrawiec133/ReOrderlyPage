@@ -140,7 +140,7 @@ export class OrderSummaryComponent implements OnInit {
                 }
             );
         } else {
-            // Użytkownik anulował zamówienie
+            
             console.log('Zamówienie anulowane');
         }
     });

@@ -132,7 +132,6 @@ export class AuthService implements OnInit{
       const wasLoggedIn = this.loggedInSubject.value;
       this.updateLoggedInStatus();
       const isTokenValid = this.isLoggedIn();
-      
   
       if (!isTokenValid && wasLoggedIn) {
         //console.log("TokenCheck")
