@@ -23,7 +23,7 @@ export const routes: Routes = [
     { path: 'order-summary', component: OrderSummaryComponent, canActivate:[authGuard] }, 
     { path: 'order-finalized', component: OrderFinalizedComponent, canActivate:[authGuard]},
     { path: 'begin-subscription', component: BeginSubscriptionComponent},
-    { path: 'subscription-finalized', component: SubscriptionFinalizedComponent},
+    { path: 'subscription-finalized', component: SubscriptionFinalizedComponent, canActivate:[authGuard]},
     { path: '**', component: ProductsComponent }
 
 ];

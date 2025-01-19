@@ -78,8 +78,8 @@ export class BeginSubscriptionComponent implements OnInit {
   
     // confirm dialog data
     const dialogData = {
-      title: 'Potwierdzenie zamówienia',
-      message: 'Czy na pewno chcesz złożyć zamówienie?'
+      title: 'Potwierdzenie utworzenia subskrypcji',
+      message: 'Czy na pewno chcesz utworzyć subskrypcję?'
     };
   
     // open confirm dialog

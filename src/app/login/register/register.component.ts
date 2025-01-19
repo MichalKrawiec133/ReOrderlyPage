@@ -35,8 +35,8 @@ export class RegisterComponent {
         this.router.navigate(['/profil']);
       },
       (error) => {
-        console.error('Błąd podczas rejestracji', error);
-        this.errorMessage = error.error || 'Wystąpił błąd podczas rejestracji.';
+        
+        this.errorMessage = 'Dane są błędne';
       }
     );
   }
